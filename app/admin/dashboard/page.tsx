@@ -204,7 +204,7 @@ function ExperiencesTab({ onRefresh }: { onRefresh?: () => void }) {
 
       {experiences.length === 0 ? (
         <div className="text-center py-12 text-gray-400">
-          No experiences yet. Click "Add New" to create one.
+          No experiences yet. Click &quot;Add New&quot; to create one.
         </div>
       ) : (
         <div className="space-y-4">
@@ -305,7 +305,7 @@ function ProjectsTab({ onRefresh }: { onRefresh?: () => void }) {
 
       {projects.length === 0 ? (
         <div className="text-center py-12 text-gray-400">
-          No projects yet. Click "Add New" to create one.
+          No projects yet. Click &quot;Add New&quot; to create one.
         </div>
       ) : (
         <div className="space-y-4">
@@ -397,7 +397,7 @@ function BlogsTab({ onRefresh }: { onRefresh?: () => void }) {
 
       {blogs.length === 0 ? (
         <div className="text-center py-12 text-gray-400">
-          No blogs yet. Click "Add New" to create one.
+          No blogs yet. Click &quot;Add New&quot; to create one.
         </div>
       ) : (
         <div className="space-y-4">

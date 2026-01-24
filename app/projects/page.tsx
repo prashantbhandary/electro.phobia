@@ -29,6 +29,7 @@ export default function ProjectsPage() {
       socket.off('project:deleted')
       disconnectSocket()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleProjectUpdate = () => {

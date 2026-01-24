@@ -79,7 +79,7 @@ export default function ContactPage() {
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400">
               Have questions about our mentorship programs, workshops, or projects? 
-              We'd love to hear from you. Reach out and let's start a conversation.
+              We&apos;d love to hear from you. Reach out and let&apos;s start a conversation.
             </p>
           </motion.div>
         </div>
@@ -170,7 +170,7 @@ export default function ContactPage() {
 
                 {submitStatus === 'success' && (
                   <div className="p-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-lg">
-                    Thank you! Your message has been sent successfully. We'll get back to you soon.
+                    Thank you! Your message has been sent successfully. We&apos;ll get back to you soon.
                   </div>
                 )}
 
@@ -212,7 +212,7 @@ export default function ContactPage() {
                   Contact Information
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-8">
-                  Feel free to reach out through any of these channels. We're here to help you 
+                  Feel free to reach out through any of these channels. We&apos;re here to help you 
                   with your electronics journey and answer any questions you may have.
                 </p>
 

@@ -27,6 +27,7 @@ export default function ExperiencesPage() {
       socket.off('experience:deleted')
       disconnectSocket()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleExperienceUpdate = () => {

@@ -30,6 +30,7 @@ export default function BlogsPage() {
       socket.off('blog:deleted')
       disconnectSocket()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleBlogUpdate = () => {

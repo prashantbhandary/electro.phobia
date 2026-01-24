@@ -23,6 +23,7 @@ export default function EditProject() {
 
   useEffect(() => {
     fetchProject();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProject = async () => {
