@@ -36,12 +36,12 @@ export default function MarkdownEditor({ value, onChange, placeholder }: Markdow
       'fullscreen',
       '|',
       'guide',
-    ],
+    ] as any,
   }), [placeholder]);
 
   return (
     <div className="markdown-editor">
-      <SimpleMDE value={value || ''} onChange={onChange} options={options} />
+      <SimpleMDE value={value || ''} onChange={onChange} options={options as any} />
     </div>
   );
 }
