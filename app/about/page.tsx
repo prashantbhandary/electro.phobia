@@ -83,8 +83,8 @@ export default function AboutPage() {
               About <span className="text-primary">ElectroPhobia</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-              ElectroPhobia is more than just a platform—it's a movement to democratize electronics 
-              education and empower the next generation of hardware innovators. We're building a 
+              ElectroPhobia is more than just a platform—it&apos;s a movement to democratize electronics 
+              education and empower the next generation of hardware innovators. We&apos;re building a 
               community where passion meets expertise.
             </p>
           </motion.div>
