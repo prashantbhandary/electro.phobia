@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { blogAPI } from '@/lib/api';
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 export default function EditBlog() {
   const router = useRouter();
@@ -111,15 +112,15 @@ export default function EditBlog() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Content</label>
-            <textarea
-              name="content"
-              value={formData.content}
-              onChange={handleChange}
-              required
-              rows={12}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#22C0B3] focus:border-transparent"
-            />
+            <label className="block text-sm font-medium text-gray-300 mb-2">Content (Markdown supported)</label>
+            {!loading && formData.content !== undefined && (
+              <MarkdownEditor
+                key={`blog-${params.id}`}
+                value={formData.content}
+                onChange={(value) => setFormData(prev => ({ ...prev, content: value }))}
+                placeholder="Write your blog content in markdown..."
+              />
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-4">

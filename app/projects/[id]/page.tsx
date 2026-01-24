@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { FiArrowLeft, FiGithub, FiExternalLink, FiCpu, FiCalendar } from 'react-icons/fi'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { projectAPI } from '@/lib/api'
 
 export default function ProjectDetail() {
@@ -18,6 +20,8 @@ export default function ProjectDetail() {
         setLoading(true)
         const id = params.id as string
         const data = await projectAPI.getById(id)
+        console.log('Project data:', data)
+        console.log('Project description:', data.description)
         setProject(data)
       } catch (err: any) {
         console.error('Error fetching project:', err)
@@ -113,14 +117,14 @@ export default function ProjectDetail() {
 
           {/* Description */}
           <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {project.description}
-            </p>
+            </ReactMarkdown>
             
             {project.fullDescription && (
-              <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {project.fullDescription}
-              </div>
+              </ReactMarkdown>
             )}
           </div>
 

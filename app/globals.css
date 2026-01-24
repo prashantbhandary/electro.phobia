@@ -50,6 +50,44 @@ body {
   background: #1a9489;
 }
 
+/* Markdown Editor Styles */
+.markdown-editor .EasyMDEContainer {
+  @apply bg-gray-700 border-gray-600 rounded-lg;
+}
+
+.markdown-editor .EasyMDEContainer .CodeMirror {
+  @apply bg-gray-700 text-white border-gray-600 rounded-lg;
+  min-height: 300px;
+}
+
+.markdown-editor .editor-toolbar {
+  @apply bg-gray-800 border-gray-600;
+}
+
+.markdown-editor .editor-toolbar button {
+  @apply text-gray-300;
+}
+
+.markdown-editor .editor-toolbar button:hover {
+  @apply bg-gray-600 text-white;
+}
+
+.markdown-editor .editor-toolbar.fullscreen {
+  @apply bg-gray-800;
+}
+
+.markdown-editor .CodeMirror-fullscreen {
+  @apply bg-gray-700;
+}
+
+.markdown-editor .editor-preview {
+  @apply bg-gray-700 text-gray-200;
+}
+
+.markdown-editor .editor-preview-side {
+  @apply bg-gray-700 text-gray-200 border-gray-600;
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { experienceAPI } from '@/lib/api';
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 export default function EditExperience() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function EditExperience() {
     status: 'upcoming',
     date: '',
     location: '',
+    imageUrl: '',
     isPublished: true,
   });
 
@@ -119,13 +121,25 @@ export default function EditExperience() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
+            <label className="block text-sm font-medium text-gray-300 mb-2">Description (Markdown supported)</label>
+            {!loading && formData.description !== undefined && (
+              <MarkdownEditor
+                key={`experience-${params.id}`}
+                value={formData.description}
+                onChange={(value) => setFormData(prev => ({ ...prev, description: value }))}
+                placeholder="Write your experience description in markdown..."
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Image URL</label>
+            <input
+              type="url"
+              name="imageUrl"
+              value={formData.imageUrl}
               onChange={handleChange}
-              required
-              rows={4}
+              placeholder="https://example.com/image.jpg"
               className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#22C0B3] focus:border-transparent"
             />
           </div>

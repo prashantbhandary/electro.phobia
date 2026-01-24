@@ -8,7 +8,7 @@ import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isDark, setIsDark] = useState(true)
+  const [isDark, setIsDark] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 

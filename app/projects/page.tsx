@@ -175,7 +175,7 @@ export default function ProjectsPage() {
                     </h3>
 
                     <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed line-clamp-3">
-                      {project.description}
+                      {project.description.replace(/[#*`_~\[\]()]/g, '').substring(0, 150)}...
                     </p>
 
                     {/* Technologies */}

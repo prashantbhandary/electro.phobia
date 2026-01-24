@@ -20,9 +20,9 @@ const Footer = () => {
   }
 
   const socialLinks = [
-    { icon: FiGithub, href: '#', label: 'GitHub' },
-    { icon: FiLinkedin, href: '#', label: 'LinkedIn' },
-    { icon: FiInstagram, href: '#', label: 'Instagram' },
+    { icon: FiGithub, href: 'https://github.com/prashantbhandary', label: 'GitHub' },
+    { icon: FiLinkedin, href: 'https://www.linkedin.com/in/prashantbdri', label: 'LinkedIn' },
+    { icon: FiInstagram, href: 'https://www.instagram.com/_prashant.08/', label: 'Instagram' },
     { icon: FiYoutube, href: '#', label: 'YouTube' },
     { icon: FiMail, href: '/contact', label: 'Email' },
   ]
@@ -78,7 +78,15 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm">
-              © {currentYear} ElectroPhobia. All rights reserved.
+              © {currentYear} ElectroPhobia. All rights reserved. Created by{' '}
+              <a 
+                href="https://bhandari-prashant.com.np/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary-600 transition-colors"
+              >
+                Prashant Bhandari
+              </a>
             </p>
             <div className="flex space-x-6 text-sm">
               <Link href="/privacy" className="text-gray-400 hover:text-primary transition-colors">

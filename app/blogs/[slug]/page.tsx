@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { FiArrowLeft, FiClock, FiUser, FiCalendar } from 'react-icons/fi'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { blogAPI } from '@/lib/api'
 
 export default function BlogPost() {
@@ -18,6 +20,8 @@ export default function BlogPost() {
         setLoading(true)
         const slug = params.slug as string
         const data = await blogAPI.getBySlug(slug)
+        console.log('Blog data:', data)
+        console.log('Blog content:', data.content)
         setBlog(data)
       } catch (err: any) {
         console.error('Error fetching blog:', err)
@@ -122,9 +126,9 @@ export default function BlogPost() {
               {blog.excerpt}
             </p>
             
-            <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {blog.content}
-            </div>
+            </ReactMarkdown>
           </div>
 
           {/* Tags */}

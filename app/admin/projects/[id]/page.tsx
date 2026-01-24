@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { projectAPI } from '@/lib/api';
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 export default function EditProject() {
   const router = useRouter();
@@ -117,15 +118,15 @@ export default function EditProject() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              required
-              rows={4}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#22C0B3] focus:border-transparent"
-            />
+            <label className="block text-sm font-medium text-gray-300 mb-2">Description (Markdown supported)</label>
+            {!loading && formData.description !== undefined && (
+              <MarkdownEditor
+                key={`project-${params.id}`}
+                value={formData.description}
+                onChange={(value) => setFormData(prev => ({ ...prev, description: value }))}
+                placeholder="Write your project description in markdown..."
+              />
+            )}
           </div>
 
           <div>

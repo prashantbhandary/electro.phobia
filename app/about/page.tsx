@@ -8,22 +8,18 @@ export default function AboutPage() {
     {
       icon: FiHeart,
       title: 'Passion for Learning',
-      description: 'We believe in fostering curiosity and a love for electronics through hands-on experience and practical knowledge.',
     },
     {
       icon: FiUsers,
       title: 'Community First',
-      description: 'Building a supportive community where enthusiasts can share, learn, and grow together in their electronics journey.',
     },
     {
       icon: FiAward,
       title: 'Excellence',
-      description: 'Committed to providing high-quality education, mentorship, and resources to help you achieve your goals.',
     },
     {
       icon: FiTrendingUp,
       title: 'Innovation',
-      description: 'Encouraging creative thinking and innovative solutions to real-world problems through electronics.',
     },
   ]
 
@@ -134,43 +130,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Our Core Values
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              The principles that guide everything we do
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-center"
-              >
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <value.icon className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {value.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Expertise Areas */}
       <section className="py-20 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -178,9 +137,6 @@ export default function AboutPage() {
             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Our Expertise
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              Comprehensive knowledge across key electronics domains
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -216,48 +172,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Our Journey
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              From passion project to thriving community
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            {timeline.map((event, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="relative mb-12 last:mb-0"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg flex-shrink-0">
-                    {event.year}
-                  </div>
-                  <div className="flex-1 h-1 bg-primary/20 ml-4"></div>
-                </div>
-                <div className="ml-24 bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    {event.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    {event.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Founder Section */}
       <section className="py-20 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -271,6 +185,21 @@ export default function AboutPage() {
               <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
                 Meet the Founder
               </h2>
+              <div className="flex justify-center mb-8">
+                <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary shadow-xl">
+                  <img
+                    src="https://bhandari-prashant.com.np/images/PrashantBhandari.png"
+                    alt="Prashant Bhandari"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Prashant Bhandari
+              </h3>
+              <p className="text-lg text-primary font-semibold mb-6">
+                Electronics Engineering Student | Founder & Creator
+              </p>
               <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl border border-gray-200 dark:border-gray-700">
                 <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                   As an electronics engineering student with a deep passion for hardware and embedded 

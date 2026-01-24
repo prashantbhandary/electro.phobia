@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { FiAward, FiUsers, FiCalendar, FiClock, FiStar } from 'react-icons/fi'
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { experienceAPI } from '@/lib/api'
 import { initSocket, disconnectSocket } from '@/lib/socket'
 
@@ -94,57 +95,75 @@ export default function ExperiencesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {mentorshipPrograms.map((program, index) => (
-              <motion.div
+              <Link 
                 key={program._id || index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
+                href={`/experiences/${program._id}`}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <FiAward className="w-10 h-10 text-primary" />
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 group cursor-pointer h-full"
+                >
+                {/* Program Image */}
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative overflow-hidden">
+                  {program.imageUrl ? (
+                    <img 
+                      src={program.imageUrl} 
+                      alt={program.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                      <FiAward className="w-20 h-20 text-primary opacity-50 group-hover:scale-110 transition-transform relative z-10" />
+                    </>
+                  )}
                 </div>
 
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                  {program.title}
-                </h3>
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                    {program.title}
+                  </h3>
 
-                <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600 dark:text-gray-400">
-                  <div className="flex items-center space-x-1">
-                    <FiClock className="w-4 h-4" />
-                    <span>{program.duration}</span>
+                  <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center space-x-1">
+                      <FiClock className="w-4 h-4" />
+                      <span>{program.duration}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <FiUsers className="w-4 h-4" />
+                      <span>{program.participants || 0}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <FiUsers className="w-4 h-4" />
-                    <span>{program.participants || 0}</span>
-                  </div>
+
+                  <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
+                    {program.description.replace(/[#*`_~\[\]()]/g, '').substring(0, 150)}...
+                  </p>
+
+                  {program.outcomes && program.outcomes.length > 0 && (
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-gray-900 dark:text-white">Key Outcomes:</h4>
+                      <ul className="space-y-1">
+                        {program.outcomes.map((outcome: string, idx: number) => (
+                          <li key={idx} className="flex items-start space-x-2 text-sm text-gray-600 dark:text-gray-400">
+                            <span className="text-primary mt-1">•</span>
+                            <span>{outcome}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {program.location && (
+                    <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+                      <strong>Location:</strong> {program.location}
+                    </div>
+                  )}
                 </div>
-
-                <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  {program.description}
-                </p>
-
-                {program.outcomes && program.outcomes.length > 0 && (
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Key Outcomes:</h4>
-                    <ul className="space-y-1">
-                      {program.outcomes.map((outcome: string, idx: number) => (
-                        <li key={idx} className="flex items-start space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                          <span className="text-primary mt-1">•</span>
-                          <span>{outcome}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {program.location && (
-                  <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-                    <strong>Location:</strong> {program.location}
-                  </div>
-                )}
               </motion.div>
+              </Link>
             ))}
           </div>
 
@@ -170,32 +189,52 @@ export default function ExperiencesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {workshops.map((workshop, index) => (
-              <motion.div
+              <Link 
                 key={workshop._id}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-900 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary transition-all duration-300"
+                href={`/experiences/${workshop._id}`}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                      {workshop.title}
-                    </h3>
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                      workshop.status === 'upcoming' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
-                      workshop.status === 'ongoing' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                      'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400'
-                    }`}>
-                      {workshop.status}
-                    </span>
-                  </div>
+                <motion.div
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary transition-all duration-300 group cursor-pointer h-full"
+                >
+                {/* Workshop Image */}
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative overflow-hidden">
+                  {workshop.imageUrl ? (
+                    <img 
+                      src={workshop.imageUrl} 
+                      alt={workshop.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors"></div>
+                      <FiUsers className="w-20 h-20 text-primary opacity-50 group-hover:scale-110 transition-transform relative z-10" />
+                    </>
+                  )}
                 </div>
 
-                <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  {workshop.description}
-                </p>
+                <div className="p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                        {workshop.title}
+                      </h3>
+                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                        workshop.status === 'upcoming' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                        workshop.status === 'ongoing' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
+                        'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400'
+                      }`}>
+                        {workshop.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
+                    {workshop.description.replace(/[#*`_~\[\]()]/g, '').substring(0, 150)}...
+                  </p>
 
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   {workshop.date && (
@@ -229,7 +268,9 @@ export default function ExperiencesPage() {
                     <strong>Location:</strong> {workshop.location}
                   </div>
                 )}
+                </div>
               </motion.div>
+              </Link>
             ))}
           </div>
 
@@ -276,8 +317,8 @@ export default function ExperiencesPage() {
                         {new Date(achievement.date).toLocaleDateString()}
                       </div>
                     )}
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
-                      {achievement.description}
+                    <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                      {achievement.description.replace(/[#*`_~\[\]()]/g, '').substring(0, 120)}...
                     </p>
                     {achievement.outcomes && achievement.outcomes.length > 0 && (
                       <div className="space-y-1">

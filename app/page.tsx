@@ -114,11 +114,6 @@ export default function Home() {
               <span className="text-primary">Build the Future</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-              Join a thriving community of electronics enthusiasts. Learn from experts, 
-              build incredible projects, and transform your hardware skills.
-            </p>
-
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 href="/experiences"
