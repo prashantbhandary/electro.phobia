@@ -60,7 +60,7 @@ const Header = () => {
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative w-12 h-12 flex-shrink-0">
               <Image
-                src="/img/logo.png"
+                src="/img/Logo.png"
                 alt="ElectroPhobia Logo"
                 fill
                 className="object-contain drop-shadow-lg"
