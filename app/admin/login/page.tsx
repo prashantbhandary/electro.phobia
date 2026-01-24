@@ -81,7 +81,7 @@ export default function AdminLogin() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="admin@electrophobia.com"
+                  placeholder="root"
                 />
               </div>
             </div>
@@ -112,11 +112,11 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-400">
+          {/* <div className="mt-6 text-center text-sm text-gray-400">
             <p>Default credentials for initial setup:</p>
             <p className="mt-1">Email: admin@electrophobia.com</p>
             <p>Password: admin123</p>
-          </div>
+          </div> */}
         </div>
       </motion.div>
     </div>
