@@ -111,12 +111,6 @@ export default function AdminLogin() {
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
-
-          {/* <div className="mt-6 text-center text-sm text-gray-400">
-            <p>Default credentials for initial setup:</p>
-            <p className="mt-1">Email: admin@electrophobia.com</p>
-            <p>Password: admin123</p>
-          </div> */}
         </div>
       </motion.div>
     </div>

@@ -58,12 +58,6 @@
 
 ## Important Notes
 
-- **Default Credentials** (for testing only):
-  - Email: `admin@electrophobia.com`
-  - Password: `admin123`
-  
-- **Change these immediately in production!**
-
 - All admin pages are protected and require login
 - JWT tokens expire after 7 days
 - MongoDB must be running for the backend to work
