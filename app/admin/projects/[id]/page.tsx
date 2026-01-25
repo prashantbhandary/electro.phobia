@@ -4,12 +4,15 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { projectAPI } from '@/lib/api';
 import MarkdownEditor from '@/components/MarkdownEditor';
+import Toast from '@/components/Toast';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function EditProject() {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' as 'success' | 'error' });
   const [formData, setFormData] = useState({
     title: '',
     category: 'IoT',
@@ -36,7 +39,7 @@ export default function EditProject() {
       });
     } catch (error) {
       console.error('Error fetching project:', error);
-      alert('Failed to load project');
+      setToast({ show: true, message: 'Failed to load project', type: 'error' });
     } finally {
       setLoading(false);
     }
@@ -51,11 +54,11 @@ export default function EditProject() {
         ...formData,
         technologies: formData.technologies.split(',').map(t => t.trim()).filter(t => t),
       });
-      alert('Project updated successfully!');
-      router.push('/admin/dashboard');
+      setToast({ show: true, message: 'Project updated successfully!', type: 'success' });
+      setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error) {
       console.error('Error updating project:', error);
-      alert('Failed to update project');
+      setToast({ show: true, message: 'Failed to update project', type: 'error' });
     } finally {
       setSaving(false);
     }
@@ -69,13 +72,20 @@ export default function EditProject() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <LoadingSpinner message="Loading project" size="lg" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
+    <>
+      <Toast 
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={() => setToast({ ...toast, show: false })}
+      />
+      <div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-3xl mx-auto px-4">
         <div className="mb-6">
           <button
@@ -222,5 +232,6 @@ export default function EditProject() {
         </form>
       </div>
     </div>
+    </>
   );
 }

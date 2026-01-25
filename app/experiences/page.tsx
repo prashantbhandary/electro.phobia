@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { experienceAPI } from '@/lib/api'
 import { initSocket, disconnectSocket } from '@/lib/socket'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function ExperiencesPage() {
   const [experiences, setExperiences] = useState<any[]>([])
@@ -54,7 +55,7 @@ export default function ExperiencesPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900 pt-20 flex items-center justify-center">
-        <div className="text-2xl text-gray-600 dark:text-gray-400">Loading experiences...</div>
+        <LoadingSpinner message="Loading experiences" size="lg" />
       </div>
     )
   }

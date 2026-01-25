@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { experienceAPI, projectAPI, blogAPI } from '@/lib/api';
 import { FiPlus, FiEdit, FiTrash2, FiLogOut, FiRefreshCw } from 'react-icons/fi';
+import Toast from '@/components/Toast';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import { useToast } from '@/lib/useToast';
 
 interface Stats {
   experiences: number;
@@ -16,6 +19,7 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats>({ experiences: 0, projects: 0, blogs: 0 });
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'experiences' | 'projects' | 'blogs'>('experiences');
+  const { toast, showToast, hideToast } = useToast();
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -66,13 +70,20 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <LoadingSpinner message="Loading dashboard" size="lg" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <>
+      <Toast 
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={hideToast}
+      />
+      <div className="min-h-screen bg-gray-900">
       {/* Header */}
       <header className="bg-gray-800 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -137,17 +148,17 @@ export default function AdminDashboard() {
           </div>
 
           <div className="p-6">
-            {activeTab === 'experiences' && <ExperiencesTab onRefresh={fetchStats} />}
-            {activeTab === 'projects' && <ProjectsTab onRefresh={fetchStats} />}
-            {activeTab === 'blogs' && <BlogsTab onRefresh={fetchStats} />}
+            {activeTab === 'experiences' && <ExperiencesTab onRefresh={fetchStats} showToast={showToast} />}
+            {activeTab === 'projects' && <ProjectsTab onRefresh={fetchStats} showToast={showToast} />}
+            {activeTab === 'blogs' && <BlogsTab onRefresh={fetchStats} showToast={showToast} />}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
-function ExperiencesTab({ onRefresh }: { onRefresh?: () => void }) {
+function ExperiencesTab({ onRefresh, showToast }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void }) {
   const router = useRouter();
   const [experiences, setExperiences] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -178,15 +189,15 @@ function ExperiencesTab({ onRefresh }: { onRefresh?: () => void }) {
       console.log('Delete result:', result);
       setExperiences(experiences.filter(exp => exp._id !== id));
       if (onRefresh) onRefresh();
-      alert('Experience deleted successfully!');
+      showToast('Experience deleted successfully!', 'success');
     } catch (error: any) {
       console.error('Error deleting experience:', error);
-      alert(`Failed to delete experience: ${error.message || 'Unknown error'}`);
+      showToast(`Failed to delete experience: ${error.message || 'Unknown error'}`, 'error');
     }
   };
 
   if (loading) {
-    return <div className="text-center py-8 text-gray-400">Loading experiences...</div>;
+    return <div className="flex justify-center py-8"><LoadingSpinner message="Loading experiences" size="md" /></div>;
   }
 
   return (
@@ -239,7 +250,7 @@ function ExperiencesTab({ onRefresh }: { onRefresh?: () => void }) {
   );
 }
 
-function ProjectsTab({ onRefresh }: { onRefresh?: () => void }) {
+function ProjectsTab({ onRefresh, showToast }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void }) {
   const router = useRouter();
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -279,15 +290,15 @@ function ProjectsTab({ onRefresh }: { onRefresh?: () => void }) {
       console.log('Delete result:', result);
       setProjects(projects.filter(proj => proj._id !== id));
       if (onRefresh) onRefresh();
-      alert('✅ Project deleted successfully!');
+      showToast('Project deleted successfully!', 'success');
     } catch (error: any) {
       console.error('Error deleting project:', error);
-      alert(`❌ Failed to delete project: ${error.message || 'Unknown error'}`);
+      showToast(`Failed to delete project: ${error.message || 'Unknown error'}`, 'error');
     }
   };
 
   if (loading) {
-    return <div className="text-center py-8 text-gray-400">Loading projects...</div>;
+    return <div className="flex justify-center py-8"><LoadingSpinner message="Loading projects" size="md" /></div>;
   }
 
   return (
@@ -340,7 +351,7 @@ function ProjectsTab({ onRefresh }: { onRefresh?: () => void }) {
   );
 }
 
-function BlogsTab({ onRefresh }: { onRefresh?: () => void }) {
+function BlogsTab({ onRefresh, showToast }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void }) {
   const router = useRouter();
   const [blogs, setBlogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -371,15 +382,15 @@ function BlogsTab({ onRefresh }: { onRefresh?: () => void }) {
       console.log('Delete result:', result);
       setBlogs(blogs.filter(blog => blog._id !== id));
       if (onRefresh) onRefresh();
-      alert('Blog deleted successfully!');
+      showToast('Blog deleted successfully!', 'success');
     } catch (error: any) {
       console.error('Error deleting blog:', error);
-      alert(`Failed to delete blog: ${error.message || 'Unknown error'}`);
+      showToast(`Failed to delete blog: ${error.message || 'Unknown error'}`, 'error');
     }
   };
 
   if (loading) {
-    return <div className="text-center py-8 text-gray-400">Loading blogs...</div>;
+    return <div className="flex justify-center py-8"><LoadingSpinner message="Loading blogs" size="md" /></div>;
   }
 
   return (

@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { projectAPI } from '@/lib/api';
 import MarkdownEditor from '@/components/MarkdownEditor';
+import Toast from '@/components/Toast';
+import { useToast } from '@/lib/useToast';
 
 export default function NewProject() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { toast, showToast, hideToast } = useToast();
   const [formData, setFormData] = useState({
     title: '',
     category: 'IoT',
@@ -30,11 +33,11 @@ export default function NewProject() {
         technologies: formData.technologies.split(',').map(t => t.trim()).filter(t => t),
       });
       console.log('Project created:', result);
-      alert('Project created successfully!');
-      router.push('/admin/dashboard');
+      showToast('Project created successfully!', 'success');
+      setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error: any) {
       console.error('Error creating project:', error);
-      alert(`Failed to create project: ${error.message || 'Unknown error'}`);
+      showToast(`Failed to create project: ${error.message || 'Unknown error'}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -46,7 +49,14 @@ export default function NewProject() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
+    <>
+      <Toast 
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={hideToast}
+      />
+      <div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-3xl mx-auto px-4">
         <div className="mb-6">
           <button
@@ -190,5 +200,6 @@ export default function NewProject() {
         </form>
       </div>
     </div>
+    </>
   );
 }
