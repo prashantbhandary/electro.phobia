@@ -22,7 +22,7 @@ const Footer = () => {
   const socialLinks = [
     { icon: FiGithub, href: 'https://github.com/prashantbhandary', label: 'GitHub' },
     { icon: FiLinkedin, href: 'https://www.linkedin.com/in/prashantbdri', label: 'LinkedIn' },
-    { icon: FiInstagram, href: 'https://www.instagram.com/_prashant.08/', label: 'Instagram' },
+    { icon: FiInstagram, href: 'https://www.instagram.com/electro.phobia/', label: 'Instagram' },
     { icon: FiYoutube, href: '#', label: 'YouTube' },
     { icon: FiMail, href: '/contact', label: 'Email' },
   ]

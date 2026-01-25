@@ -60,7 +60,7 @@ export default function ContactPage() {
   const socialLinks = [
     { icon: FiGithub, name: 'GitHub', url: 'https://github.com/prashantbhandary' },
     { icon: FiLinkedin, name: 'LinkedIn', url: 'https://www.linkedin.com/in/prashantbdri' },
-    { icon: FiInstagram, name: 'Instagram', url: 'https://www.instagram.com/_prashant.08/' },
+    { icon: FiInstagram, name: 'Instagram', url: 'https://www.instagram.com/electro.phobia/' },
   ]
 
   return (
