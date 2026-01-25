@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { projectAPI } from '@/lib/api'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function ProjectDetail() {
   const params = useParams()
@@ -39,7 +40,7 @@ export default function ProjectDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900 pt-20 flex items-center justify-center">
-        <div className="text-gray-600 dark:text-gray-400">Loading...</div>
+        <LoadingSpinner message="Loading project" size="lg" />
       </div>
     )
   }

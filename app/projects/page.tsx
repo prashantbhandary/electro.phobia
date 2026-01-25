@@ -6,6 +6,7 @@ import { FiZap, FiCpu, FiRadio, FiTool, FiGithub, FiExternalLink } from 'react-i
 import { projectAPI } from '@/lib/api'
 import Link from 'next/link'
 import { initSocket, disconnectSocket } from '@/lib/socket'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState('All')
@@ -69,7 +70,7 @@ export default function ProjectsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900 pt-20 flex items-center justify-center">
-        <div className="text-2xl text-gray-600 dark:text-gray-400">Loading projects...</div>
+        <LoadingSpinner message="Loading projects" size="lg" />
       </div>
     )
   }

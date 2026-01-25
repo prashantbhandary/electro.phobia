@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { blogAPI } from '@/lib/api';
 import MarkdownEditor from '@/components/MarkdownEditor';
+import Toast from '@/components/Toast';
+import { useToast } from '@/lib/useToast';
 
 export default function NewBlog() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { toast, showToast, hideToast } = useToast();
   const [formData, setFormData] = useState({
     title: '',
     excerpt: '',
@@ -26,8 +29,8 @@ export default function NewBlog() {
     // Check if user is authenticated
     const token = localStorage.getItem('adminToken');
     if (!token) {
-      alert('You must be logged in to create a blog post. Redirecting to login...');
-      router.push('/admin/login');
+      showToast('You must be logged in to create a blog post', 'error');
+      setTimeout(() => router.push('/admin/login'), 1500);
       setLoading(false);
       return;
     }
@@ -43,12 +46,12 @@ export default function NewBlog() {
     try {
       const result = await blogAPI.create(blogData);
       console.log('Blog created successfully:', result);
-      alert('Blog created successfully!');
-      router.push('/admin/dashboard');
+      showToast('Blog created successfully!', 'success');
+      setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error: any) {
       console.error('Error creating blog:', error);
       const errorMessage = error.message || 'Unknown error';
-      alert(`Failed to create blog: ${errorMessage}`);
+      showToast(`Failed to create blog: ${errorMessage}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -60,7 +63,14 @@ export default function NewBlog() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
+    <>
+      <Toast 
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={hideToast}
+      />
+      <div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-3xl mx-auto px-4">
         <div className="mb-6">
           <button
@@ -190,5 +200,6 @@ export default function NewBlog() {
         </form>
       </div>
     </div>
+    </>
   );
 }

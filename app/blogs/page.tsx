@@ -6,6 +6,7 @@ import { FiSearch, FiCalendar, FiClock, FiUser, FiArrowRight } from 'react-icons
 import { blogAPI } from '@/lib/api'
 import Link from 'next/link'
 import { initSocket, disconnectSocket } from '@/lib/socket'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function BlogsPage() {
   const [activeCategory, setActiveCategory] = useState('All')
@@ -75,7 +76,7 @@ export default function BlogsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900 pt-20 flex items-center justify-center">
-        <div className="text-2xl text-gray-600 dark:text-gray-400">Loading blogs...</div>
+        <LoadingSpinner message="Loading blogs" size="lg" />
       </div>
     )
   }

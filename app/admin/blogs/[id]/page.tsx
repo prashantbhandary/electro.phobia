@@ -4,12 +4,16 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { blogAPI } from '@/lib/api';
 import MarkdownEditor from '@/components/MarkdownEditor';
+import Toast from '@/components/Toast';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import { useToast } from '@/lib/useToast';
 
 export default function EditBlog() {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const { toast, showToast, hideToast } = useToast();
   const [formData, setFormData] = useState({
     title: '',
     excerpt: '',
@@ -35,7 +39,7 @@ export default function EditBlog() {
       });
     } catch (error) {
       console.error('Error fetching blog:', error);
-      alert('Failed to load blog');
+      showToast('Failed to load blog', 'error');
     } finally {
       setLoading(false);
     }
@@ -50,11 +54,11 @@ export default function EditBlog() {
         ...formData,
         tags: formData.tags.split(',').map(t => t.trim()).filter(t => t),
       });
-      alert('Blog updated successfully!');
-      router.push('/admin/dashboard');
+      showToast('Blog updated successfully!', 'success');
+      setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error) {
       console.error('Error updating blog:', error);
-      alert('Failed to update blog');
+      showToast('Failed to update blog', 'error');
     } finally {
       setSaving(false);
     }
@@ -68,13 +72,20 @@ export default function EditBlog() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <LoadingSpinner message="Loading blog" size="lg" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
+    <>
+      <Toast 
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={hideToast}
+      />
+      <div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-3xl mx-auto px-4">
         <div className="mb-6">
           <button
@@ -207,5 +218,6 @@ export default function EditBlog() {
         </form>
       </div>
     </div>
+    </>
   );
 }

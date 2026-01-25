@@ -4,12 +4,16 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { experienceAPI } from '@/lib/api';
 import MarkdownEditor from '@/components/MarkdownEditor';
+import Toast from '@/components/Toast';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import { useToast } from '@/lib/useToast';
 
 export default function EditExperience() {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const { toast, showToast, hideToast } = useToast();
   const [formData, setFormData] = useState({
     title: '',
     type: 'mentorship',
@@ -39,7 +43,7 @@ export default function EditExperience() {
       });
     } catch (error) {
       console.error('Error fetching experience:', error);
-      alert('Failed to load experience');
+      showToast('Failed to load experience', 'error');
     } finally {
       setLoading(false);
     }
@@ -54,11 +58,11 @@ export default function EditExperience() {
         ...formData,
         outcomes: formData.outcomes.split('\n').filter(o => o.trim()),
       });
-      alert('Experience updated successfully!');
-      router.push('/admin/dashboard');
+      showToast('Experience updated successfully!', 'success');
+      setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error) {
       console.error('Error updating experience:', error);
-      alert('Failed to update experience');
+      showToast('Failed to update experience', 'error');
     } finally {
       setSaving(false);
     }
@@ -75,13 +79,20 @@ export default function EditExperience() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <LoadingSpinner message="Loading experience" size="lg" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
+    <>
+      <Toast 
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={hideToast}
+      />
+      <div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-3xl mx-auto px-4">
         <div className="mb-6">
           <button
@@ -250,5 +261,6 @@ export default function EditExperience() {
         </form>
       </div>
     </div>
+    </>
   );
 }

@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { experienceAPI } from '@/lib/api';
 import MarkdownEditor from '@/components/MarkdownEditor';
+import Toast from '@/components/Toast';
+import { useToast } from '@/lib/useToast';
 
 export default function NewExperience() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { toast, showToast, hideToast } = useToast();
   const [formData, setFormData] = useState({
     title: '',
     type: 'mentorship',
@@ -31,11 +34,11 @@ export default function NewExperience() {
         ...formData,
         outcomes: formData.outcomes.split('\n').filter(o => o.trim()),
       });
-      alert('Experience created successfully!');
-      router.push('/admin/dashboard');
+      showToast('Experience created successfully!', 'success');
+      setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error) {
       console.error('Error creating experience:', error);
-      alert('Failed to create experience');
+      showToast('Failed to create experience', 'error');
     } finally {
       setLoading(false);
     }
@@ -50,7 +53,14 @@ export default function NewExperience() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
+    <>
+      <Toast 
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={hideToast}
+      />
+      <div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-3xl mx-auto px-4">
         <div className="mb-6">
           <button
@@ -216,5 +226,6 @@ export default function NewExperience() {
         </form>
       </div>
     </div>
+    </>
   );
 }
