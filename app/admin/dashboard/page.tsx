@@ -6,6 +6,7 @@ import { experienceAPI, projectAPI, blogAPI } from '@/lib/api';
 import { FiPlus, FiEdit, FiTrash2, FiLogOut, FiRefreshCw } from 'react-icons/fi';
 import Toast from '@/components/Toast';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import { useToast } from '@/lib/useToast';
 
 interface Stats {
@@ -20,6 +21,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'experiences' | 'projects' | 'blogs'>('experiences');
   const { toast, showToast, hideToast } = useToast();
+  const [confirmDialog, setConfirmDialog] = useState({ show: false, message: '', onConfirm: () => {} });
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -82,6 +84,18 @@ export default function AdminDashboard() {
         type={toast.type}
         isVisible={toast.show}
         onClose={hideToast}
+      />
+      <ConfirmDialog 
+        isOpen={confirmDialog.show}
+        message={confirmDialog.message}
+        onConfirm={() => {
+          confirmDialog.onConfirm()
+          setConfirmDialog({ show: false, message: '', onConfirm: () => {} })
+        }}
+        onCancel={() => setConfirmDialog({ show: false, message: '', onConfirm: () => {} })}
+        variant="danger"
+        title="Confirm Delete"
+        confirmText="Delete"
       />
       <div className="min-h-screen bg-gray-900">
       {/* Header */}
@@ -148,9 +162,9 @@ export default function AdminDashboard() {
           </div>
 
           <div className="p-6">
-            {activeTab === 'experiences' && <ExperiencesTab onRefresh={fetchStats} showToast={showToast} />}
-            {activeTab === 'projects' && <ProjectsTab onRefresh={fetchStats} showToast={showToast} />}
-            {activeTab === 'blogs' && <BlogsTab onRefresh={fetchStats} showToast={showToast} />}
+            {activeTab === 'experiences' && <ExperiencesTab onRefresh={fetchStats} showToast={showToast} showConfirm={(msg, onConfirm) => setConfirmDialog({ show: true, message: msg, onConfirm })} />}
+            {activeTab === 'projects' && <ProjectsTab onRefresh={fetchStats} showToast={showToast} showConfirm={(msg, onConfirm) => setConfirmDialog({ show: true, message: msg, onConfirm })} />}
+            {activeTab === 'blogs' && <BlogsTab onRefresh={fetchStats} showToast={showToast} showConfirm={(msg, onConfirm) => setConfirmDialog({ show: true, message: msg, onConfirm })} />}
           </div>
         </div>
       </div>
@@ -159,7 +173,7 @@ export default function AdminDashboard() {
   );
 }
 
-function ExperiencesTab({ onRefresh, showToast }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void }) {
+function ExperiencesTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void; showConfirm: (message: string, onConfirm: () => void) => void }) {
   const router = useRouter();
   const [experiences, setExperiences] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -181,20 +195,20 @@ function ExperiencesTab({ onRefresh, showToast }: { onRefresh?: () => void; show
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this experience?')) return;
-    
-    console.log('Deleting experience with ID:', id);
-    
-    try {
-      const result = await experienceAPI.delete(id);
-      console.log('Delete result:', result);
-      setExperiences(experiences.filter(exp => exp._id !== id));
-      if (onRefresh) onRefresh();
-      showToast('Experience deleted successfully!', 'success');
-    } catch (error: any) {
-      console.error('Error deleting experience:', error);
-      showToast(`Failed to delete experience: ${error.message || 'Unknown error'}`, 'error');
-    }
+    showConfirm('Are you sure you want to delete this experience? This action cannot be undone.', async () => {
+      console.log('Deleting experience with ID:', id);
+      
+      try {
+        const result = await experienceAPI.delete(id);
+        console.log('Delete result:', result);
+        setExperiences(experiences.filter(exp => exp._id !== id));
+        if (onRefresh) onRefresh();
+        showToast('Experience deleted successfully!', 'success');
+      } catch (error: any) {
+        console.error('Error deleting experience:', error);
+        showToast(`Failed to delete experience: ${error.message || 'Unknown error'}`, 'error');
+      }
+    });
   };
 
   if (loading) {
@@ -251,7 +265,7 @@ function ExperiencesTab({ onRefresh, showToast }: { onRefresh?: () => void; show
   );
 }
 
-function ProjectsTab({ onRefresh, showToast }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void }) {
+function ProjectsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void; showConfirm: (message: string, onConfirm: () => void) => void }) {
   const router = useRouter();
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -275,27 +289,20 @@ function ProjectsTab({ onRefresh, showToast }: { onRefresh?: () => void; showToa
   const handleDelete = async (id: string) => {
     console.log('DELETE BUTTON CLICKED! ID:', id);
     
-    const confirmDelete = window.confirm('⚠️ Are you sure you want to delete this project?\n\nThis action cannot be undone.');
-    
-    console.log('Confirmation result:', confirmDelete);
-    
-    if (!confirmDelete) {
-      console.log('User cancelled deletion');
-      return;
-    }
-    
-    console.log('User confirmed - proceeding with deletion for ID:', id);
-    
-    try {
-      const result = await projectAPI.delete(id);
-      console.log('Delete result:', result);
-      setProjects(projects.filter(proj => proj._id !== id));
-      if (onRefresh) onRefresh();
-      showToast('Project deleted successfully!', 'success');
-    } catch (error: any) {
-      console.error('Error deleting project:', error);
-      showToast(`Failed to delete project: ${error.message || 'Unknown error'}`, 'error');
-    }
+    showConfirm('Are you sure you want to delete this project? This action cannot be undone.', async () => {
+      console.log('User confirmed - proceeding with deletion for ID:', id);
+      
+      try {
+        const result = await projectAPI.delete(id);
+        console.log('Delete result:', result);
+        setProjects(projects.filter(proj => proj._id !== id));
+        if (onRefresh) onRefresh();
+        showToast('Project deleted successfully!', 'success');
+      } catch (error: any) {
+        console.error('Error deleting project:', error);
+        showToast(`Failed to delete project: ${error.message || 'Unknown error'}`, 'error');
+      }
+    });
   };
 
   if (loading) {
@@ -352,7 +359,7 @@ function ProjectsTab({ onRefresh, showToast }: { onRefresh?: () => void; showToa
   );
 }
 
-function BlogsTab({ onRefresh, showToast }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void }) {
+function BlogsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void; showConfirm: (message: string, onConfirm: () => void) => void }) {
   const router = useRouter();
   const [blogs, setBlogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -374,20 +381,20 @@ function BlogsTab({ onRefresh, showToast }: { onRefresh?: () => void; showToast:
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this blog?')) return;
-    
-    console.log('Deleting blog with ID:', id);
-    
-    try {
-      const result = await blogAPI.delete(id);
-      console.log('Delete result:', result);
-      setBlogs(blogs.filter(blog => blog._id !== id));
-      if (onRefresh) onRefresh();
-      showToast('Blog deleted successfully!', 'success');
-    } catch (error: any) {
-      console.error('Error deleting blog:', error);
-      showToast(`Failed to delete blog: ${error.message || 'Unknown error'}`, 'error');
-    }
+    showConfirm('Are you sure you want to delete this blog? This action cannot be undone.', async () => {
+      console.log('Deleting blog with ID:', id);
+      
+      try {
+        const result = await blogAPI.delete(id);
+        console.log('Delete result:', result);
+        setBlogs(blogs.filter(blog => blog._id !== id));
+        if (onRefresh) onRefresh();
+        showToast('Blog deleted successfully!', 'success');
+      } catch (error: any) {
+        console.error('Error deleting blog:', error);
+        showToast(`Failed to delete blog: ${error.message || 'Unknown error'}`, 'error');
+      }
+    });
   };
 
   if (loading) {
