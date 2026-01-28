@@ -40,10 +40,26 @@ export default function DynamicMeta({ title, description, image, type = 'website
     updateMetaTag('og:title', title)
     updateMetaTag('og:description', description)
     updateMetaTag('og:type', type)
+    updateMetaTag('og:url', window.location.href)
+    updateMetaTag('og:site_name', 'ElectroPhobia')
     
     if (image) {
-      const imageUrl = image.startsWith('http') ? image : `${window.location.origin}${image}`
+      // Handle backend images (from Railway) vs frontend images
+      let imageUrl = image
+      
+      if (image.startsWith('/uploads/')) {
+        // Backend image - construct full Railway URL
+        const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+        imageUrl = `${backendUrl}${image}`
+      } else if (!image.startsWith('http')) {
+        // Frontend static image
+        imageUrl = `${window.location.origin}${image}`
+      }
+      
       updateMetaTag('og:image', imageUrl)
+      updateMetaTag('og:image:secure_url', imageUrl)
+      updateMetaTag('og:image:width', '1200')
+      updateMetaTag('og:image:height', '630')
       updateMetaName('twitter:image', imageUrl)
     }
     
