@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: 'ElectroPhobia',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/img/Logo.png',
         width: 1200,
         height: 630,
         alt: 'ElectroPhobia - Electronics Mentorship & Community',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ElectroPhobia - Electronics Mentorship & Community',
     description: 'Join ElectroPhobia for expert electronics mentorship, innovative projects, and workshops. Learn embedded systems, Arduino, IoT from professionals.',
-    images: ['/og-image.jpg'],
+    images: ['/img/Logo.png'],
     creator: '@electrophobia',
   },
   robots: {
@@ -103,7 +103,6 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <LayoutWrapper>{children}</LayoutWrapper>
-        <SpeedInsights />
       </body>
     </html>
   )
