@@ -8,6 +8,10 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { blogAPI } from '@/lib/api'
 import LoadingSpinner from '@/components/LoadingSpinner'
+import DynamicMeta from '@/components/DynamicMeta'
+
+// Note: Metadata is generated on the server side via metadata.ts
+// This component focuses on client-side rendering
 
 export default function BlogPost() {
   const params = useParams()
@@ -67,6 +71,15 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+      {blog && (
+        <DynamicMeta
+          title={blog.title}
+          description={blog.excerpt || blog.content?.substring(0, 160) || ''}
+          image={blog.image}
+          type="article"
+          publishedTime={blog.createdAt}
+        />
+      )}
       <article className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           {/* Back Button */}

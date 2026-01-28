@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { experienceAPI } from '@/lib/api'
 import LoadingSpinner from '@/components/LoadingSpinner'
+import DynamicMeta from '@/components/DynamicMeta'
 
 export default function ExperienceDetail() {
   const params = useParams()
@@ -67,6 +68,14 @@ export default function ExperienceDetail() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+      {experience && (
+        <DynamicMeta
+          title={experience.title}
+          description={experience.description?.substring(0, 160) || ''}
+          image={experience.image}
+          type="article"
+        />
+      )}
       <article className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           {/* Back Button */}
