@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import { organizationSchema, websiteSchema } from './schema'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -102,6 +103,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <LayoutWrapper>{children}</LayoutWrapper>
+        <SpeedInsights />
       </body>
     </html>
   )
