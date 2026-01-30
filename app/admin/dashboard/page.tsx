@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { experienceAPI, projectAPI, blogAPI } from '@/lib/api';
+import { experienceAPI, projectAPI, blogAPI, productAPI } from '@/lib/api';
 import { FiPlus, FiEdit, FiTrash2, FiLogOut, FiRefreshCw } from 'react-icons/fi';
 import Toast from '@/components/Toast';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -13,13 +13,14 @@ interface Stats {
   experiences: number;
   projects: number;
   blogs: number;
+  products: number;
 }
 
 export default function AdminDashboard() {
   const router = useRouter();
-  const [stats, setStats] = useState<Stats>({ experiences: 0, projects: 0, blogs: 0 });
+  const [stats, setStats] = useState<Stats>({ experiences: 0, projects: 0, blogs: 0, products: 0 });
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'experiences' | 'projects' | 'blogs'>('experiences');
+  const [activeTab, setActiveTab] = useState<'experiences' | 'projects' | 'blogs' | 'products'>('experiences');
   const { toast, showToast, hideToast } = useToast();
   const [confirmDialog, setConfirmDialog] = useState({ show: false, message: '', onConfirm: () => {} });
 
@@ -46,19 +47,21 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const [experiences, projects, blogs] = await Promise.all([
+      const [experiences, projects, blogs, products] = await Promise.all([
         experienceAPI.getAll(),
         projectAPI.getAll(),
         blogAPI.getAll(),
+        productAPI.getAll(),
       ]);
       setStats({
         experiences: Array.isArray(experiences) ? experiences.length : 0,
         projects: Array.isArray(projects) ? projects.length : 0,
         blogs: Array.isArray(blogs) ? blogs.length : 0,
+        products: Array.isArray(products) ? products.length : 0,
       });
     } catch (error) {
       console.error('Error fetching stats:', error);
-      setStats({ experiences: 0, projects: 0, blogs: 0 });
+      setStats({ experiences: 0, projects: 0, blogs: 0, products: 0 });
     } finally {
       setLoading(false);
     }
@@ -126,7 +129,7 @@ export default function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
             <h3 className="text-gray-400 text-sm font-medium mb-2">Total Experiences</h3>
             <p className="text-3xl font-bold text-[#22C0B3]">{stats.experiences}</p>
@@ -139,13 +142,17 @@ export default function AdminDashboard() {
             <h3 className="text-gray-400 text-sm font-medium mb-2">Total Blogs</h3>
             <p className="text-3xl font-bold text-[#22C0B3]">{stats.blogs}</p>
           </div>
+          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h3 className="text-gray-400 text-sm font-medium mb-2">Total Products</h3>
+            <p className="text-3xl font-bold text-[#22C0B3]">{stats.products}</p>
+          </div>
         </div>
 
         {/* Tabs */}
         <div className="bg-gray-800 rounded-lg border border-gray-700">
           <div className="border-b border-gray-700">
             <nav className="flex gap-4 px-6 pt-4">
-              {['experiences', 'projects', 'blogs'].map((tab) => (
+              {['experiences', 'projects', 'blogs', 'products'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab as any)}
@@ -165,6 +172,7 @@ export default function AdminDashboard() {
             {activeTab === 'experiences' && <ExperiencesTab onRefresh={fetchStats} showToast={showToast} showConfirm={(msg, onConfirm) => setConfirmDialog({ show: true, message: msg, onConfirm })} />}
             {activeTab === 'projects' && <ProjectsTab onRefresh={fetchStats} showToast={showToast} showConfirm={(msg, onConfirm) => setConfirmDialog({ show: true, message: msg, onConfirm })} />}
             {activeTab === 'blogs' && <BlogsTab onRefresh={fetchStats} showToast={showToast} showConfirm={(msg, onConfirm) => setConfirmDialog({ show: true, message: msg, onConfirm })} />}
+            {activeTab === 'products' && <ProductsTab onRefresh={fetchStats} showToast={showToast} showConfirm={(msg, onConfirm) => setConfirmDialog({ show: true, message: msg, onConfirm })} />}
           </div>
         </div>
       </div>
@@ -439,6 +447,100 @@ function BlogsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => voi
                   </button>
                   <button
                     onClick={() => handleDelete(blog._id)}
+                    className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                  >
+                    <FiTrash2 />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProductsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => void; showToast: (message: string, type: 'success' | 'error') => void; showConfirm: (message: string, onConfirm: () => void) => void }) {
+  const router = useRouter();
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const data = await productAPI.getAll();
+      setProducts(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    showConfirm('Are you sure you want to delete this product? This action cannot be undone.', async () => {
+      console.log('Deleting product with ID:', id);
+      
+      try {
+        const result = await productAPI.delete(id);
+        console.log('Delete result:', result);
+        setProducts(products.filter(prod => prod._id !== id));
+        if (onRefresh) onRefresh();
+        showToast('Product deleted successfully!', 'success');
+      } catch (error: any) {
+        console.error('Error deleting product:', error);
+        showToast(`Failed to delete product: ${error.message || 'Unknown error'}`, 'error');
+      }
+    });
+  };
+
+  if (loading) {
+    return <div className="flex justify-center py-8"><LoadingSpinner message="Loading products" size="md" /></div>;
+  }
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-white">Manage Products</h2>
+        <button
+          onClick={() => router.push('/admin/products/new')}
+          className="flex items-center gap-2 px-4 py-2 bg-[#22C0B3] hover:bg-[#1da89d] text-white rounded-lg transition-colors"
+        >
+          <FiPlus />
+          Add New
+        </button>
+      </div>
+
+      {products.length === 0 ? (
+        <div className="text-center py-12 text-gray-400">
+          No products yet. Click &quot;Add New&quot; to create one.
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {products.map((product) => (
+            <div key={product._id} className="bg-gray-900 rounded-lg p-4 border border-gray-700">
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-white mb-1">{product.title}</h3>
+                  <p className="text-gray-400 text-sm mb-2">
+                    {product.category} • ${product.price} • Stock: {product.stock}
+                  </p>
+                  <p className="text-gray-500 text-sm line-clamp-2">{product.description}</p>
+                </div>
+                <div className="flex gap-2 ml-4">
+                  <button
+                    onClick={() => router.push(`/admin/products/${product._id}`)}
+                    className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                  >
+                    <FiEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(product._id)}
                     className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
                   >
                     <FiTrash2 />
