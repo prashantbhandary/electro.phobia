@@ -528,7 +528,7 @@ function ProductsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => 
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-white mb-1">{product.title}</h3>
                   <p className="text-gray-400 text-sm mb-2">
-                    {product.category} • ${product.price} • Stock: {product.stock}
+                    {product.category} • NPR {product.price} • Stock: {product.stock}
                   </p>
                   <p className="text-gray-500 text-sm line-clamp-2">{product.description}</p>
                 </div>

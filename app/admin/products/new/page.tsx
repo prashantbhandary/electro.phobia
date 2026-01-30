@@ -100,7 +100,7 @@ export default function NewProduct() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Price ($)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Price (NPR)</label>
               <input
                 type="number"
                 name="price"
