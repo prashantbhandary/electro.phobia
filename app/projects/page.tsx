@@ -42,7 +42,6 @@ export default function ProjectsPage() {
       const data = await projectAPI.getAll()
       setProjects(Array.isArray(data) ? data.filter((proj: any) => proj.isPublished) : [])
     } catch (error) {
-      console.error('Error fetching projects:', error)
       setProjects([])
     } finally {
       setLoading(false)

@@ -22,11 +22,8 @@ export default function ExperienceDetail() {
         setLoading(true)
         const id = params.id as string
         const data = await experienceAPI.getById(id)
-        console.log('Experience data:', data)
-        console.log('Experience description:', data.description)
         setExperience(data)
       } catch (err: any) {
-        console.error('Error fetching experience:', err)
         setError(err.message || 'Failed to load experience')
       } finally {
         setLoading(false)
@@ -161,7 +158,7 @@ export default function ExperienceDetail() {
                     key={index}
                     className="flex items-start space-x-3 text-gray-700 dark:text-gray-300"
                   >
-                    <span className="text-primary text-xl mt-1">✓</span>
+                    <span className="text-primary text-xl mt-1">-</span>
                     <span className="text-lg">{outcome}</span>
                   </li>
                 ))}

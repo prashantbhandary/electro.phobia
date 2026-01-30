@@ -12,15 +12,12 @@ export const initSocket = () => {
     });
 
     socket.on('connect', () => {
-      console.log('🔌 Connected to WebSocket server');
     });
 
     socket.on('disconnect', () => {
-      console.log('🔌 Disconnected from WebSocket server');
     });
 
     socket.on('connect_error', (error) => {
-      console.error('WebSocket connection error:', error);
     });
   }
 

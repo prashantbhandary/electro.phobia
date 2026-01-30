@@ -24,7 +24,6 @@ export default function ProductDetail() {
         const data = await productAPI.getById(id)
         setProduct(data)
       } catch (err: any) {
-        console.error('Error fetching product:', err)
         setError(err.message || 'Failed to load product')
       } finally {
         setLoading(false)

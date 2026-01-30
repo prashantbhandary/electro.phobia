@@ -60,7 +60,6 @@ export default function AdminDashboard() {
         products: Array.isArray(products) ? products.length : 0,
       });
     } catch (error) {
-      console.error('Error fetching stats:', error);
       setStats({ experiences: 0, projects: 0, blogs: 0, products: 0 });
     } finally {
       setLoading(false);
@@ -201,7 +200,6 @@ function ExperiencesTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () 
       const data = await experienceAPI.getAll();
       setExperiences(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error('Error fetching experiences:', error);
       setExperiences([]);
     } finally {
       setLoading(false);
@@ -210,16 +208,13 @@ function ExperiencesTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () 
 
   const handleDelete = async (id: string) => {
     showConfirm('Are you sure you want to delete this experience? This action cannot be undone.', async () => {
-      console.log('Deleting experience with ID:', id);
       
       try {
         const result = await experienceAPI.delete(id);
-        console.log('Delete result:', result);
         setExperiences(experiences.filter(exp => exp._id !== id));
         if (onRefresh) onRefresh();
         showToast('Experience deleted successfully!', 'success');
       } catch (error: any) {
-        console.error('Error deleting experience:', error);
         showToast(`Failed to delete experience: ${error.message || 'Unknown error'}`, 'error');
       }
     });
@@ -293,7 +288,6 @@ function ProjectsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => 
       const data = await projectAPI.getAll();
       setProjects(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error('Error fetching projects:', error);
       setProjects([]);
     } finally {
       setLoading(false);
@@ -301,19 +295,15 @@ function ProjectsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => 
   };
 
   const handleDelete = async (id: string) => {
-    console.log('DELETE BUTTON CLICKED! ID:', id);
     
     showConfirm('Are you sure you want to delete this project? This action cannot be undone.', async () => {
-      console.log('User confirmed - proceeding with deletion for ID:', id);
       
       try {
         const result = await projectAPI.delete(id);
-        console.log('Delete result:', result);
         setProjects(projects.filter(proj => proj._id !== id));
         if (onRefresh) onRefresh();
         showToast('Project deleted successfully!', 'success');
       } catch (error: any) {
-        console.error('Error deleting project:', error);
         showToast(`Failed to delete project: ${error.message || 'Unknown error'}`, 'error');
       }
     });
@@ -387,7 +377,6 @@ function BlogsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => voi
       const data = await blogAPI.getAll();
       setBlogs(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error('Error fetching blogs:', error);
       setBlogs([]);
     } finally {
       setLoading(false);
@@ -396,16 +385,13 @@ function BlogsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => voi
 
   const handleDelete = async (id: string) => {
     showConfirm('Are you sure you want to delete this blog? This action cannot be undone.', async () => {
-      console.log('Deleting blog with ID:', id);
       
       try {
         const result = await blogAPI.delete(id);
-        console.log('Delete result:', result);
         setBlogs(blogs.filter(blog => blog._id !== id));
         if (onRefresh) onRefresh();
         showToast('Blog deleted successfully!', 'success');
       } catch (error: any) {
-        console.error('Error deleting blog:', error);
         showToast(`Failed to delete blog: ${error.message || 'Unknown error'}`, 'error');
       }
     });
@@ -481,7 +467,6 @@ function ProductsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => 
       const data = await productAPI.getAll();
       setProducts(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error('Error fetching products:', error);
       setProducts([]);
     } finally {
       setLoading(false);
@@ -490,16 +475,13 @@ function ProductsTab({ onRefresh, showToast, showConfirm }: { onRefresh?: () => 
 
   const handleDelete = async (id: string) => {
     showConfirm('Are you sure you want to delete this product? This action cannot be undone.', async () => {
-      console.log('Deleting product with ID:', id);
       
       try {
         const result = await productAPI.delete(id);
-        console.log('Delete result:', result);
         setProducts(products.filter(prod => prod._id !== id));
         if (onRefresh) onRefresh();
         showToast('Product deleted successfully!', 'success');
       } catch (error: any) {
-        console.error('Error deleting product:', error);
         showToast(`Failed to delete product: ${error.message || 'Unknown error'}`, 'error');
       }
     });

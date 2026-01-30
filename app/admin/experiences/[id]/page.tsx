@@ -42,7 +42,6 @@ export default function EditExperience() {
         date: data.date ? new Date(data.date).toISOString().split('T')[0] : '',
       });
     } catch (error) {
-      console.error('Error fetching experience:', error);
       showToast('Failed to load experience', 'error');
     } finally {
       setLoading(false);
@@ -61,7 +60,6 @@ export default function EditExperience() {
       showToast('Experience updated successfully!', 'success');
       setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error) {
-      console.error('Error updating experience:', error);
       showToast('Failed to update experience', 'error');
     } finally {
       setSaving(false);

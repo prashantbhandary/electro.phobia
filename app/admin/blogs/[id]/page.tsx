@@ -38,7 +38,6 @@ export default function EditBlog() {
         tags: Array.isArray(data.tags) ? data.tags.join(', ') : '',
       });
     } catch (error) {
-      console.error('Error fetching blog:', error);
       showToast('Failed to load blog', 'error');
     } finally {
       setLoading(false);
@@ -57,7 +56,6 @@ export default function EditBlog() {
       showToast('Blog updated successfully!', 'success');
       setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error) {
-      console.error('Error updating blog:', error);
       showToast('Failed to update blog', 'error');
     } finally {
       setSaving(false);

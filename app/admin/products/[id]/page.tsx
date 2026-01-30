@@ -39,7 +39,6 @@ export default function EditProduct() {
         stock: data.stock.toString(),
       });
     } catch (error) {
-      console.error('Error fetching product:', error);
       showToast('Failed to load product', 'error');
     } finally {
       setLoading(false);
@@ -59,7 +58,6 @@ export default function EditProduct() {
       showToast('Product updated successfully!', 'success');
       setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error: any) {
-      console.error('Error updating product:', error);
       showToast(`Failed to update product: ${error.message || 'Unknown error'}`, 'error');
     } finally {
       setSaving(false);

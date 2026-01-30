@@ -42,7 +42,6 @@ export default function ShopPage() {
       const data = await productAPI.getAll()
       setProducts(Array.isArray(data) ? data.filter((prod: any) => prod.isPublished) : [])
     } catch (error) {
-      console.error('Error fetching products:', error)
       setProducts([])
     } finally {
       setLoading(false)

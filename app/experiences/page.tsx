@@ -41,7 +41,6 @@ export default function ExperiencesPage() {
       const data = await experienceAPI.getAll()
       setExperiences(Array.isArray(data) ? data.filter((exp: any) => exp.isPublished) : [])
     } catch (error) {
-      console.error('Error fetching experiences:', error)
       setExperiences([])
     } finally {
       setLoading(false)
@@ -325,7 +324,7 @@ export default function ExperiencesPage() {
                       <div className="space-y-1">
                         {achievement.outcomes.map((outcome: string, idx: number) => (
                           <div key={idx} className="flex items-start space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                            <span className="text-primary mt-1">✓</span>
+                            <span className="text-primary mt-1">-</span>
                             <span>{outcome}</span>
                           </div>
                         ))}

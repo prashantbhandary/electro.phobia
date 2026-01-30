@@ -36,12 +36,6 @@ export const logout = () => {
 export const apiCall = async (endpoint: string, options: RequestInit = {}) => {
   const token = getAuthToken()
   
-  console.log('API Call:', {
-    endpoint,
-    method: options.method || 'GET',
-    hasToken: !!token,
-  });
-  
   const config: RequestInit = {
     ...options,
     headers: {
@@ -58,18 +52,10 @@ export const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     const contentType = response.headers.get('content-type')
     if (!contentType || !contentType.includes('application/json')) {
       const text = await response.text()
-      console.error('Non-JSON response:', text)
       throw new Error(`Backend server error: Expected JSON but got ${contentType}. Is the backend server running?`)
     }
     
     const data = await response.json()
-
-    console.log('API Response:', {
-      endpoint,
-      status: response.status,
-      ok: response.ok,
-      data
-    });
 
     if (!response.ok) {
       if (response.status === 401) {
@@ -80,7 +66,6 @@ export const apiCall = async (endpoint: string, options: RequestInit = {}) => {
 
     return data
   } catch (error) {
-    console.error('API Error:', error)
     throw error
   }
 }

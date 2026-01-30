@@ -32,11 +32,9 @@ export default function NewProduct() {
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock),
       });
-      console.log('Product created:', result);
       showToast('Product created successfully!', 'success');
       setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error: any) {
-      console.error('Error creating product:', error);
       showToast(`Failed to create product: ${error.message || 'Unknown error'}`, 'error');
     } finally {
       setLoading(false);

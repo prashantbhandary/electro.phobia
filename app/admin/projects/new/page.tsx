@@ -32,11 +32,9 @@ export default function NewProject() {
         ...formData,
         technologies: formData.technologies.split(',').map(t => t.trim()).filter(t => t),
       });
-      console.log('Project created:', result);
       showToast('Project created successfully!', 'success');
       setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error: any) {
-      console.error('Error creating project:', error);
       showToast(`Failed to create project: ${error.message || 'Unknown error'}`, 'error');
     } finally {
       setLoading(false);

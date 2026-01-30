@@ -40,16 +40,11 @@ export default function NewBlog() {
       tags: formData.tags.split(',').map(t => t.trim()).filter(t => t),
     };
 
-    console.log('Submitting blog data:', blogData);
-    console.log('Auth token exists:', !!token);
-
     try {
       const result = await blogAPI.create(blogData);
-      console.log('Blog created successfully:', result);
       showToast('Blog created successfully!', 'success');
       setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error: any) {
-      console.error('Error creating blog:', error);
       const errorMessage = error.message || 'Unknown error';
       showToast(`Failed to create blog: ${errorMessage}`, 'error');
     } finally {

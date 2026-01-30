@@ -38,7 +38,6 @@ export default function EditProject() {
         technologies: Array.isArray(data.technologies) ? data.technologies.join(', ') : '',
       });
     } catch (error) {
-      console.error('Error fetching project:', error);
       setToast({ show: true, message: 'Failed to load project', type: 'error' });
     } finally {
       setLoading(false);
@@ -57,7 +56,6 @@ export default function EditProject() {
       setToast({ show: true, message: 'Project updated successfully!', type: 'success' });
       setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error) {
-      console.error('Error updating project:', error);
       setToast({ show: true, message: 'Failed to update project', type: 'error' });
     } finally {
       setSaving(false);

@@ -43,7 +43,6 @@ export default function BlogsPage() {
       const data = await blogAPI.getAll()
       setBlogs(Array.isArray(data) ? data.filter((blog: any) => blog.isPublished) : [])
     } catch (error) {
-      console.error('Error fetching blogs:', error)
       setBlogs([])
     } finally {
       setLoading(false)

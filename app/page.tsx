@@ -43,7 +43,6 @@ export default function Home() {
         : []
       setFeaturedProjects(featured)
     } catch (error) {
-      console.error('Error fetching featured projects:', error)
       setFeaturedProjects([])
     } finally {
       setLoadingProjects(false)

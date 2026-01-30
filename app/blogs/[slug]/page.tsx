@@ -25,11 +25,8 @@ export default function BlogPost() {
         setLoading(true)
         const slug = params.slug as string
         const data = await blogAPI.getBySlug(slug)
-        console.log('Blog data:', data)
-        console.log('Blog content:', data.content)
         setBlog(data)
       } catch (err: any) {
-        console.error('Error fetching blog:', err)
         setError(err.message || 'Failed to load blog post')
       } finally {
         setLoading(false)

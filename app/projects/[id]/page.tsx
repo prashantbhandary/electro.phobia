@@ -22,11 +22,8 @@ export default function ProjectDetail() {
         setLoading(true)
         const id = params.id as string
         const data = await projectAPI.getById(id)
-        console.log('Project data:', data)
-        console.log('Project description:', data.description)
         setProject(data)
       } catch (err: any) {
-        console.error('Error fetching project:', err)
         setError(err.message || 'Failed to load project')
       } finally {
         setLoading(false)

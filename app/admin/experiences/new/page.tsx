@@ -37,7 +37,6 @@ export default function NewExperience() {
       showToast('Experience created successfully!', 'success');
       setTimeout(() => router.push('/admin/dashboard'), 1500);
     } catch (error) {
-      console.error('Error creating experience:', error);
       showToast('Failed to create experience', 'error');
     } finally {
       setLoading(false);

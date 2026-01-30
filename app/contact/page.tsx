@@ -21,7 +21,6 @@ export default function ContactPage() {
     setSubmitStatus('idle')
 
     try {
-      console.log('Sending contact form...')
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/contact`, {
         method: 'POST',
         headers: {
@@ -30,20 +29,16 @@ export default function ContactPage() {
         body: JSON.stringify(formData),
       })
 
-      console.log('Response status:', response.status)
       const data = await response.json()
-      console.log('Response data:', data)
 
       if (response.ok) {
         setSubmitStatus('success')
         setFormData({ name: '', email: '', subject: '', message: '' })
       } else {
         setSubmitStatus('error')
-        console.error('Failed to send message:', data.message)
         alert(data.message || 'Failed to send message')
       }
     } catch (error) {
-      console.error('Error sending message:', error)
       setSubmitStatus('error')
       alert('Network error. Please check your connection.')
     } finally {

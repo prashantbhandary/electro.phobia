@@ -35,7 +35,6 @@ export default function ContactMessages() {
       const data = await contactAPI.getAll()
       setContacts(data)
     } catch (error) {
-      console.error('Error fetching contacts:', error)
     } finally {
       setLoading(false)
     }
@@ -48,7 +47,6 @@ export default function ContactMessages() {
         c._id === id ? { ...c, status: status as any } : c
       ))
     } catch (error) {
-      console.error('Error updating status:', error)
     }
   }
 
@@ -59,7 +57,6 @@ export default function ContactMessages() {
       await contactAPI.delete(id)
       setContacts(contacts.filter(c => c._id !== id))
     } catch (error) {
-      console.error('Error deleting contact:', error)
     }
   }
 
