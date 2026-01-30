@@ -18,15 +18,33 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus('idle')
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+      } else {
+        setSubmitStatus('error')
+        console.error('Failed to send message:', data.message)
+      }
+    } catch (error) {
+      console.error('Error sending message:', error)
+      setSubmitStatus('error')
+    } finally {
       setIsSubmitting(false)
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      
       setTimeout(() => setSubmitStatus('idle'), 5000)
-    }, 1500)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -40,8 +58,8 @@ export default function ContactPage() {
     {
       icon: FiMail,
       title: 'Email',
-      content: 'info@bhandari-prashant.com.np',
-      link: 'mailto:info@bhandari-prashant.com.np',
+      content: 'electrophobiatech@gmail.com',
+      link: 'mailto:electrophobiatech@gmail.com',
     },
     {
       icon: FiPhone,

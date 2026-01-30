@@ -82,10 +82,10 @@ const Header = () => {
                   <Link
                     key={link.path}
                     href={link.path}
-                    className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ml-2 ${
+                    className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ml-2 transform ${
                       pathname === link.path
-                        ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-lg'
-                        : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 shadow-md hover:shadow-lg'
+                        ? 'bg-primary text-white shadow-lg scale-105'
+                        : 'bg-primary text-white hover:bg-primary/90 shadow-md hover:shadow-xl hover:scale-110 hover:-translate-y-0.5'
                     }`}
                   >
                     {link.name}
@@ -149,10 +149,10 @@ const Header = () => {
                       key={link.path}
                       href={link.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                      className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 transform ${
                         pathname === link.path
-                          ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-lg'
-                          : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100'
+                          ? 'bg-primary text-white shadow-lg scale-105'
+                          : 'bg-primary text-white hover:bg-primary/90 hover:shadow-xl hover:scale-105'
                       }`}
                     >
                       {link.name}
