@@ -53,6 +53,15 @@ export const apiCall = async (endpoint: string, options: RequestInit = {}) => {
 
   try {
     const response = await fetch(`${API_URL}${endpoint}`, config)
+    
+    // Check if response is JSON before parsing
+    const contentType = response.headers.get('content-type')
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text()
+      console.error('Non-JSON response:', text)
+      throw new Error(`Backend server error: Expected JSON but got ${contentType}. Is the backend server running?`)
+    }
+    
     const data = await response.json()
 
     console.log('API Response:', {
@@ -124,4 +133,19 @@ export const blogAPI = {
   create: (data: any) => apiCall('/blogs', { method: 'POST', body: JSON.stringify(data) }),
   update: (id: string, data: any) => apiCall(`/blogs/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   delete: (id: string) => apiCall(`/blogs/${id}`, { method: 'DELETE' }),
+}
+
+// Product API
+export const productAPI = {
+  getAll: async (category?: string) => {
+    const response = await apiCall(`/products${category ? `?category=${category}` : ''}`)
+    return response.data || []
+  },
+  getById: async (id: string) => {
+    const response = await apiCall(`/products/${id}`)
+    return response.data || null
+  },
+  create: (data: any) => apiCall('/products', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id: string, data: any) => apiCall(`/products/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (id: string) => apiCall(`/products/${id}`, { method: 'DELETE' }),
 }
