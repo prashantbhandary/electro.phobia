@@ -149,3 +149,17 @@ export const productAPI = {
   update: (id: string, data: any) => apiCall(`/products/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   delete: (id: string) => apiCall(`/products/${id}`, { method: 'DELETE' }),
 }
+
+// Contact/Messages API
+export const contactAPI = {
+  getAll: async () => {
+    const response = await apiCall('/admin/contacts')
+    return response.data || []
+  },
+  updateStatus: (id: string, status: string) => 
+    apiCall(`/admin/contacts/${id}/status`, { 
+      method: 'PATCH', 
+      body: JSON.stringify({ status }) 
+    }),
+  delete: (id: string) => apiCall(`/admin/contacts/${id}`, { method: 'DELETE' }),
+}

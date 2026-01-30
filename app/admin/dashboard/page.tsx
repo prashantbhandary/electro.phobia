@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   const router = useRouter();
   const [stats, setStats] = useState<Stats>({ experiences: 0, projects: 0, blogs: 0, products: 0 });
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'experiences' | 'projects' | 'blogs' | 'products'>('experiences');
+  const [activeTab, setActiveTab] = useState<'experiences' | 'projects' | 'blogs' | 'products' | 'messages'>('experiences');
   const { toast, showToast, hideToast } = useToast();
   const [confirmDialog, setConfirmDialog] = useState({ show: false, message: '', onConfirm: () => {} });
 
@@ -152,10 +152,16 @@ export default function AdminDashboard() {
         <div className="bg-gray-800 rounded-lg border border-gray-700">
           <div className="border-b border-gray-700">
             <nav className="flex gap-4 px-6 pt-4">
-              {['experiences', 'projects', 'blogs', 'products'].map((tab) => (
+              {['experiences', 'projects', 'blogs', 'products', 'messages'].map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => setActiveTab(tab as any)}
+                  onClick={() => {
+                    if (tab === 'messages') {
+                      router.push('/admin/contacts');
+                    } else {
+                      setActiveTab(tab as any);
+                    }
+                  }}
                   className={`px-4 py-2 font-medium rounded-t-lg transition-colors ${
                     activeTab === tab
                       ? 'bg-gray-900 text-[#22C0B3] border-t border-x border-gray-700'
