@@ -32,10 +32,10 @@ const Header = () => {
     { name: 'Home', path: '/' },
     { name: 'Experiences', path: '/experiences' },
     { name: 'Projects', path: '/projects' },
-    { name: 'Shop', path: '/shop' },
     { name: 'Blogs', path: '/blogs' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Shop', path: '/shop' },
   ]
 
   // Determine text color based on scroll and page
@@ -75,19 +75,38 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname === link.path
-                    ? 'text-primary bg-primary/10'
-                    : `${textColorClass} hover:text-primary hover:bg-primary/5`
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              // Special styling for Shop button
+              if (link.name === 'Shop') {
+                return (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ml-2 ${
+                      pathname === link.path
+                        ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-lg'
+                        : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 shadow-md hover:shadow-lg'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              }
+              
+              return (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    pathname === link.path
+                      ? 'text-primary bg-primary/10'
+                      : `${textColorClass} hover:text-primary hover:bg-primary/5`
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              )
+            })}
           </div>
 
           {/* Theme Toggle & Mobile Menu Button */}
@@ -122,20 +141,40 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex flex-col space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    pathname === link.path
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-primary/5'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                // Special styling for Shop button in mobile
+                if (link.name === 'Shop') {
+                  return (
+                    <Link
+                      key={link.path}
+                      href={link.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                        pathname === link.path
+                          ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-lg'
+                          : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  )
+                }
+                
+                return (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      pathname === link.path
+                        ? 'text-primary bg-primary/10'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-primary/5'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              })}
             </div>
           </div>
         )}
