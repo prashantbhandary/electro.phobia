@@ -18,6 +18,10 @@ export async function generateBlogMetadata(slug: string) {
     const result = await response.json()
     const blog = result.data
     
+    if (!blog) {
+      throw new Error('Blog data not found')
+    }
+    
     // Get the image URL - handle both direct URLs and backend paths
     let imageUrl = blog.imageUrl
     if (imageUrl && !imageUrl.startsWith('http')) {
@@ -25,22 +29,30 @@ export async function generateBlogMetadata(slug: string) {
       imageUrl = `${backendUrl}${imageUrl}`
     }
     
+    console.log('Blog metadata:', {
+      title: blog.title,
+      imageUrl: imageUrl,
+      hasImage: !!imageUrl
+    })
+    
+    // Construct absolute URLs to override parent metadata properly
+    const absoluteImageUrl = imageUrl || 'https://electrophobia.tech/img/Logo.png'
+    
     return {
       title: blog.title,
       description: blog.excerpt || blog.content?.substring(0, 160),
+      metadataBase: null, // Prevent base URL from being prepended to absolute URLs
       openGraph: {
         title: blog.title,
         description: blog.excerpt || blog.content?.substring(0, 160),
         url: `https://electrophobia.tech/blogs/${slug}`,
         siteName: 'ElectroPhobia',
-        images: imageUrl ? [
-          {
-            url: imageUrl,
-            width: 1200,
-            height: 630,
-            alt: blog.title,
-          }
-        ] : undefined,
+        images: [{
+          url: absoluteImageUrl,
+          width: 1200,
+          height: 630,
+          alt: blog.title,
+        }],
         type: 'article',
         publishedTime: blog.createdAt,
         authors: [blog.author || 'ElectroPhobia'],
