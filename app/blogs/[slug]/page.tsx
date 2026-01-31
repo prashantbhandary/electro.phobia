@@ -72,7 +72,7 @@ export default function BlogPost() {
         <DynamicMeta
           title={blog.title}
           description={blog.excerpt || blog.content?.substring(0, 160) || ''}
-          image={blog.image}
+          image={blog.imageUrl}
           type="article"
           publishedTime={blog.createdAt}
         />

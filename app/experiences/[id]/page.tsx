@@ -69,7 +69,7 @@ export default function ExperienceDetail() {
         <DynamicMeta
           title={experience.title}
           description={experience.description?.substring(0, 160) || ''}
-          image={experience.image}
+          image={experience.imageUrl}
           type="article"
         />
       )}

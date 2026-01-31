@@ -69,7 +69,7 @@ export default function ProjectDetail() {
         <DynamicMeta
           title={project.title}
           description={project.description?.substring(0, 160) || ''}
-          image={project.image}
+          image={project.imageUrl}
           type="article"
         />
       )}

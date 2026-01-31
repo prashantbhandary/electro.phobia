@@ -11,15 +11,22 @@ export async function generateBlogMetadata(slug: string) {
     
     const blog = await response.json()
     
+    // Get the image URL - handle both direct URLs and backend paths
+    let imageUrl = blog.imageUrl
+    if (imageUrl && !imageUrl.startsWith('http')) {
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+      imageUrl = `${backendUrl}${imageUrl}`
+    }
+    
     return {
       title: `${blog.title} | ElectroPhobia`,
       description: blog.excerpt || blog.content?.substring(0, 160),
       openGraph: {
         title: blog.title,
         description: blog.excerpt || blog.content?.substring(0, 160),
-        images: blog.image ? [
+        images: imageUrl ? [
           {
-            url: blog.image.startsWith('http') ? blog.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${blog.image}`,
+            url: imageUrl,
             width: 1200,
             height: 630,
             alt: blog.title,
@@ -33,7 +40,7 @@ export async function generateBlogMetadata(slug: string) {
         card: 'summary_large_image',
         title: blog.title,
         description: blog.excerpt || blog.content?.substring(0, 160),
-        images: blog.image ? [blog.image.startsWith('http') ? blog.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${blog.image}`] : undefined,
+        images: imageUrl ? [imageUrl] : undefined,
       },
     }
   } catch (error) {
@@ -55,15 +62,22 @@ export async function generateProjectMetadata(id: string) {
     
     const project = await response.json()
     
+    // Get the image URL - handle both direct URLs and backend paths
+    let imageUrl = project.imageUrl
+    if (imageUrl && !imageUrl.startsWith('http')) {
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+      imageUrl = `${backendUrl}${imageUrl}`
+    }
+    
     return {
       title: `${project.title} | ElectroPhobia Projects`,
       description: project.description?.substring(0, 160) || 'Explore this electronics project',
       openGraph: {
         title: project.title,
         description: project.description?.substring(0, 160),
-        images: project.image ? [
+        images: imageUrl ? [
           {
-            url: project.image.startsWith('http') ? project.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${project.image}`,
+            url: imageUrl,
             width: 1200,
             height: 630,
             alt: project.title,
@@ -75,7 +89,7 @@ export async function generateProjectMetadata(id: string) {
         card: 'summary_large_image',
         title: project.title,
         description: project.description?.substring(0, 160),
-        images: project.image ? [project.image.startsWith('http') ? project.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${project.image}`] : undefined,
+        images: imageUrl ? [imageUrl] : undefined,
       },
     }
   } catch (error) {
@@ -97,15 +111,22 @@ export async function generateExperienceMetadata(id: string) {
     
     const experience = await response.json()
     
+    // Get the image URL - handle both direct URLs and backend paths
+    let imageUrl = experience.imageUrl
+    if (imageUrl && !imageUrl.startsWith('http')) {
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+      imageUrl = `${backendUrl}${imageUrl}`
+    }
+    
     return {
       title: `${experience.title} | ElectroPhobia Experiences`,
       description: experience.description?.substring(0, 160) || 'Learn about this experience',
       openGraph: {
         title: experience.title,
         description: experience.description?.substring(0, 160),
-        images: experience.image ? [
+        images: imageUrl ? [
           {
-            url: experience.image.startsWith('http') ? experience.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${experience.image}`,
+            url: imageUrl,
             width: 1200,
             height: 630,
             alt: experience.title,
@@ -117,7 +138,7 @@ export async function generateExperienceMetadata(id: string) {
         card: 'summary_large_image',
         title: experience.title,
         description: experience.description?.substring(0, 160),
-        images: experience.image ? [experience.image.startsWith('http') ? experience.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${experience.image}`] : undefined,
+        images: imageUrl ? [imageUrl] : undefined,
       },
     }
   } catch (error) {
