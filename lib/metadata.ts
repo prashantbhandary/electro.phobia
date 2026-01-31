@@ -1,8 +1,14 @@
 // Metadata generation utilities for dynamic Open Graph images
 
+// Get API URL - works in both server and client environments
+const getApiUrl = () => {
+  return process.env.NEXT_PUBLIC_API_URL || 'https://backend-j3mf.onrender.com/api'
+}
+
 export async function generateBlogMetadata(slug: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
+    const API_URL = getApiUrl()
+    console.log('Fetching blog metadata from:', `${API_URL}/blogs/slug/${slug}`)
     const response = await fetch(`${API_URL}/blogs/slug/${slug}`, {
       cache: 'no-store'
     })
@@ -45,6 +51,7 @@ export async function generateBlogMetadata(slug: string) {
       },
     }
   } catch (error) {
+    console.error('Error generating blog metadata:', error)
     return {
       title: 'Blog Post | ElectroPhobia',
       description: 'Read our latest electronics blog posts and tutorials',
@@ -54,7 +61,7 @@ export async function generateBlogMetadata(slug: string) {
 
 export async function generateProjectMetadata(id: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
+    const API_URL = getApiUrl()
     const response = await fetch(`${API_URL}/projects/${id}`, {
       cache: 'no-store'
     })
@@ -95,6 +102,7 @@ export async function generateProjectMetadata(id: string) {
       },
     }
   } catch (error) {
+    console.error('Error generating project metadata:', error)
     return {
       title: 'Project | ElectroPhobia',
       description: 'Explore our electronics projects',
@@ -104,7 +112,7 @@ export async function generateProjectMetadata(id: string) {
 
 export async function generateExperienceMetadata(id: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
+    const API_URL = getApiUrl()
     const response = await fetch(`${API_URL}/experiences/${id}`, {
       cache: 'no-store'
     })
@@ -145,6 +153,7 @@ export async function generateExperienceMetadata(id: string) {
       },
     }
   } catch (error) {
+    console.error('Error generating experience metadata:', error)
     return {
       title: 'Experience | ElectroPhobia',
       description: 'Explore our experiences and achievements',
