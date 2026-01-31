@@ -31,8 +31,10 @@ export async function generateBlogMetadata(slug: string) {
     
     // If it's a Facebook CDN URL, use image proxy to avoid blocking
     if (imageUrl && imageUrl.includes('fbcdn.net')) {
-      // Use wsrv.nl as image proxy - pass URL directly without double encoding
-      imageUrl = `https://wsrv.nl/?url=${imageUrl}&w=1200&h=630&fit=cover`
+      // Clean the Facebook URL - remove query parameters that might cause issues
+      const cleanUrl = imageUrl.split('?')[0]
+      // Use images.weserv.nl (alternative proxy) with proper encoding
+      imageUrl = `https://images.weserv.nl/?url=${encodeURIComponent(cleanUrl)}&w=1200&h=630&fit=cover&output=jpg`
     }
     
     console.log('Blog metadata:', {
