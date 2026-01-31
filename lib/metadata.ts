@@ -29,12 +29,12 @@ export async function generateBlogMetadata(slug: string) {
       imageUrl = `${backendUrl}${imageUrl}`
     }
     
-    // If it's a Facebook CDN URL, use image proxy to avoid blocking
+    // If it's a Facebook CDN URL, show warning that it won't work
+    // Facebook blocks their CDN from being used in OG tags
     if (imageUrl && imageUrl.includes('fbcdn.net')) {
-      // Clean the Facebook URL - remove query parameters that might cause issues
-      const cleanUrl = imageUrl.split('?')[0]
-      // Use images.weserv.nl (alternative proxy) with proper encoding
-      imageUrl = `https://images.weserv.nl/?url=${encodeURIComponent(cleanUrl)}&w=1200&h=630&fit=cover&output=jpg`
+      console.warn('Facebook CDN URLs cannot be used for Open Graph. Please use Imgur, Cloudinary, or upload to your backend.')
+      // Use site logo as fallback
+      imageUrl = 'https://electrophobia.tech/img/Logo.png'
     }
     
     console.log('Blog metadata:', {
