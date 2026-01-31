@@ -5,5 +5,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return await generateBlogMetadata(params.slug)
 }
 
-// Export the page component from the main file
-export { default } from './page'
+export default function BlogLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
+}
