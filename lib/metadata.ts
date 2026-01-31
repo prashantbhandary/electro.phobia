@@ -9,7 +9,8 @@ export async function generateBlogMetadata(slug: string) {
     
     if (!response.ok) throw new Error('Blog not found')
     
-    const blog = await response.json()
+    const result = await response.json()
+    const blog = result.data
     
     // Get the image URL - handle both direct URLs and backend paths
     let imageUrl = blog.imageUrl
@@ -60,7 +61,8 @@ export async function generateProjectMetadata(id: string) {
     
     if (!response.ok) throw new Error('Project not found')
     
-    const project = await response.json()
+    const result = await response.json()
+    const project = result.data
     
     // Get the image URL - handle both direct URLs and backend paths
     let imageUrl = project.imageUrl
@@ -109,7 +111,8 @@ export async function generateExperienceMetadata(id: string) {
     
     if (!response.ok) throw new Error('Experience not found')
     
-    const experience = await response.json()
+    const result = await response.json()
+    const experience = result.data
     
     // Get the image URL - handle both direct URLs and backend paths
     let imageUrl = experience.imageUrl
