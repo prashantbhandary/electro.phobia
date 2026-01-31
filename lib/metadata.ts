@@ -26,11 +26,13 @@ export async function generateBlogMetadata(slug: string) {
     }
     
     return {
-      title: `${blog.title} | ElectroPhobia`,
+      title: blog.title,
       description: blog.excerpt || blog.content?.substring(0, 160),
       openGraph: {
         title: blog.title,
         description: blog.excerpt || blog.content?.substring(0, 160),
+        url: `https://electrophobia.tech/blogs/${slug}`,
+        siteName: 'ElectroPhobia',
         images: imageUrl ? [
           {
             url: imageUrl,
