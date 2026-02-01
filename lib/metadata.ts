@@ -186,7 +186,12 @@ export async function generateProductMetadata(id: string) {
         description: description,
         url: `https://electrophobia.tech/shop/${id}`,
         siteName: 'ElectroPhobia',
-        images: [absoluteImageUrl],
+        images: [{
+          url: absoluteImageUrl,
+          width: 1200,
+          height: 630,
+          alt: product.title,
+        }],
         type: 'website',
         locale: 'en_US',
       },
