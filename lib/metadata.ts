@@ -66,9 +66,6 @@ export async function generateBlogMetadata(slug: string) {
         authors: [blog.author || 'ElectroPhobia'],
         locale: 'en_US',
       },
-      other: {
-        'fb:app_id': '1234567890',
-      },
       twitter: {
         card: 'summary_large_image',
         title: blog.title,
@@ -197,9 +194,6 @@ export async function generateProductMetadata(id: string) {
         }],
         type: 'website',
         locale: 'en_US',
-      },
-      other: {
-        'fb:app_id': '1234567890', // Add your Facebook App ID here if you have one
       },
       twitter: {
         card: 'summary_large_image',
