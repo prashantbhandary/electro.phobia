@@ -64,6 +64,10 @@ export async function generateBlogMetadata(slug: string) {
         type: 'article',
         publishedTime: blog.createdAt,
         authors: [blog.author || 'ElectroPhobia'],
+        locale: 'en_US',
+      },
+      other: {
+        'fb:app_id': '1234567890',
       },
       twitter: {
         card: 'summary_large_image',
@@ -156,10 +160,15 @@ export async function generateProductMetadata(id: string) {
       imageUrl = `${backendUrl}${imageUrl}`
     }
     
-    // If it's a Facebook CDN URL, show warning that it won't work
+    // Warn about problematic image hosts
     if (imageUrl && imageUrl.includes('fbcdn.net')) {
       console.warn('Facebook CDN URLs cannot be used for Open Graph. Please use Imgur, Cloudinary, or upload to your backend.')
       imageUrl = 'https://electrophobia.tech/img/Logo.png'
+    }
+    
+    // Notion images may have access restrictions for Facebook scraper
+    if (imageUrl && imageUrl.includes('notion.site')) {
+      console.warn('Notion images may not work with Facebook/Messenger sharing. Consider using Imgur, Cloudinary, or uploading to your backend.')
     }
     
     console.log('Product metadata:', {
@@ -187,6 +196,10 @@ export async function generateProductMetadata(id: string) {
           alt: product.title,
         }],
         type: 'website',
+        locale: 'en_US',
+      },
+      other: {
+        'fb:app_id': '1234567890', // Add your Facebook App ID here if you have one
       },
       twitter: {
         card: 'summary_large_image',
