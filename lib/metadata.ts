@@ -186,7 +186,7 @@ export async function generateProductMetadata(id: string) {
           height: 630,
           alt: product.title,
         }],
-        type: 'product',
+        type: 'website',
       },
       twitter: {
         card: 'summary_large_image',
@@ -199,7 +199,26 @@ export async function generateProductMetadata(id: string) {
     console.error('Error generating product metadata:', error)
     return {
       title: 'Product | ElectroPhobia',
-      description: 'Shop our electronics products',
+      description: 'Shop our electronics products and components',
+      openGraph: {
+        title: 'Product | ElectroPhobia',
+        description: 'Shop our electronics products and components',
+        url: `https://electrophobia.tech/shop/${id}`,
+        siteName: 'ElectroPhobia',
+        images: [{
+          url: 'https://electrophobia.tech/img/Logo.png',
+          width: 1200,
+          height: 630,
+          alt: 'ElectroPhobia',
+        }],
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Product | ElectroPhobia',
+        description: 'Shop our electronics products and components',
+        images: ['https://electrophobia.tech/img/Logo.png'],
+      },
     }
   }
 }
