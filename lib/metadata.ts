@@ -132,6 +132,78 @@ export async function generateProjectMetadata(id: string) {
   }
 }
 
+export async function generateProductMetadata(id: string) {
+  try {
+    const API_URL = getApiUrl()
+    console.log('Fetching product metadata from:', `${API_URL}/products/${id}`)
+    const response = await fetch(`${API_URL}/products/${id}`, {
+      cache: 'no-store'
+    })
+    
+    if (!response.ok) throw new Error('Product not found')
+    
+    const result = await response.json()
+    const product = result.data
+    
+    if (!product) {
+      throw new Error('Product data not found')
+    }
+    
+    // Get the image URL - handle both direct URLs and backend paths
+    let imageUrl = product.imageUrl
+    if (imageUrl && !imageUrl.startsWith('http')) {
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+      imageUrl = `${backendUrl}${imageUrl}`
+    }
+    
+    // If it's a Facebook CDN URL, show warning that it won't work
+    if (imageUrl && imageUrl.includes('fbcdn.net')) {
+      console.warn('Facebook CDN URLs cannot be used for Open Graph. Please use Imgur, Cloudinary, or upload to your backend.')
+      imageUrl = 'https://electrophobia.tech/img/Logo.png'
+    }
+    
+    console.log('Product metadata:', {
+      title: product.title,
+      imageUrl: imageUrl,
+      hasImage: !!imageUrl
+    })
+    
+    // Construct absolute URLs to override parent metadata properly
+    const absoluteImageUrl = imageUrl || 'https://electrophobia.tech/img/Logo.png'
+    
+    return {
+      title: product.title,
+      description: product.description?.substring(0, 160) || `${product.title} - Available for NPR ${product.price}`,
+      metadataBase: null, // Prevent base URL from being prepended to absolute URLs
+      openGraph: {
+        title: product.title,
+        description: product.description?.substring(0, 160) || `${product.title} - Available for NPR ${product.price}`,
+        url: `https://electrophobia.tech/shop/${id}`,
+        siteName: 'ElectroPhobia',
+        images: [{
+          url: absoluteImageUrl,
+          width: 1200,
+          height: 630,
+          alt: product.title,
+        }],
+        type: 'product',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: product.title,
+        description: product.description?.substring(0, 160) || `${product.title} - Available for NPR ${product.price}`,
+        images: imageUrl ? [imageUrl] : undefined,
+      },
+    }
+  } catch (error) {
+    console.error('Error generating product metadata:', error)
+    return {
+      title: 'Product | ElectroPhobia',
+      description: 'Shop our electronics products',
+    }
+  }
+}
+
 export async function generateExperienceMetadata(id: string) {
   try {
     const API_URL = getApiUrl()
