@@ -176,30 +176,25 @@ export async function generateProductMetadata(id: string) {
     
     // Construct absolute URLs to override parent metadata properly
     const absoluteImageUrl = imageUrl || 'https://electrophobia.tech/img/Logo.png'
+    const description = product.description?.substring(0, 160) || `${product.title} - Available for NPR ${product.price}`
     
     return {
       title: product.title,
-      description: product.description?.substring(0, 160) || `${product.title} - Available for NPR ${product.price}`,
-      metadataBase: null, // Prevent base URL from being prepended to absolute URLs
+      description: description,
       openGraph: {
         title: product.title,
-        description: product.description?.substring(0, 160) || `${product.title} - Available for NPR ${product.price}`,
+        description: description,
         url: `https://electrophobia.tech/shop/${id}`,
         siteName: 'ElectroPhobia',
-        images: [{
-          url: absoluteImageUrl,
-          width: 1200,
-          height: 630,
-          alt: product.title,
-        }],
+        images: [absoluteImageUrl],
         type: 'website',
         locale: 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
         title: product.title,
-        description: product.description?.substring(0, 160) || `${product.title} - Available for NPR ${product.price}`,
-        images: imageUrl ? [imageUrl] : undefined,
+        description: description,
+        images: [absoluteImageUrl],
       },
     }
   } catch (error) {
