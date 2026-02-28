@@ -44,11 +44,11 @@ export default function DynamicMeta({ title, description, image, type = 'website
     updateMetaTag('og:site_name', 'ElectroPhobia')
     
     if (image) {
-      // Handle backend images (from Railway) vs frontend images
+      // Handle backend images (from Render) vs frontend images
       let imageUrl = image
       
       if (image.startsWith('/uploads/')) {
-        // Backend image - construct full Railway URL
+        // Backend image - construct full backend URL
         const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
         imageUrl = `${backendUrl}${image}`
       } else if (!image.startsWith('http')) {
