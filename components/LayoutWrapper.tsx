@@ -7,8 +7,9 @@ import Footer from './Footer'
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isAdminRoute = pathname?.startsWith('/admin')
+  const isLabRoute   = pathname?.startsWith('/lab')
 
-  if (isAdminRoute) {
+  if (isAdminRoute || isLabRoute) {
     return <>{children}</>
   }
 
