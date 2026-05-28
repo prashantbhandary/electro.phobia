@@ -12,7 +12,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   if (isAdminRoute || isLabRoute) {
     return <>{children}</>
   }
-
+  
   return (
     <>
       <Header />

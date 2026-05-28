@@ -75,6 +75,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code', // Add your Google Search Console verification code
   },
+  other: {
+    'google-adsense-account': 'ca-pub-7919679791683906',
+  },
   icons: {
     icon: [
       { url: '/favicon/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
