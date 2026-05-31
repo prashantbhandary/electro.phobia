@@ -45,3 +45,29 @@ export const personSchema = {
     'https://linkedin.com/in/prashant-bhandari',
   ],
 }
+
+// Course structured data for the ElectroLab bootcamp — enables rich results
+// (course cards) in Google for "learn electronics" style searches.
+export const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'ElectroPhobia Electronics & Robotics Bootcamp',
+  description:
+    'A free, structured 5-day electronics and robotics course plus a PCB-design track — from voltage and Ohm’s Law to sensors, motors, control systems, communication protocols, and designing a PCB in KiCad.',
+  url: 'https://electrophobia.tech/lab/course',
+  provider: {
+    '@type': 'Organization',
+    name: 'ElectroPhobia',
+    url: 'https://electrophobia.tech',
+    sameAs: ['https://www.instagram.com/electro.phobia/'],
+  },
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  educationalLevel: 'Beginner to Intermediate',
+  about: ['Electronics', 'Robotics', 'Arduino', 'ESP32', 'Embedded Systems', 'PCB Design'],
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: 'online',
+    courseWorkload: 'PT20H',
+  },
+}

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BOOTCAMP_MODULES, PCB_MODULES, type Module } from '@/lib/lab/curriculum-data';
+import { courseSchema } from '@/app/schema';
 
 const LEVEL_COLOR: Record<string, string> = {
   Beginner: 'text-green-700 bg-green-50 border-green-200',
@@ -66,6 +67,10 @@ function ModuleCard({ module, i }: { module: Module; i: number }) {
 export default function CoursePage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
+      />
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div className="flex items-center gap-3">
