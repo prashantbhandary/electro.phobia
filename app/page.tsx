@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { FiArrowRight, FiZap, FiUsers, FiCode, FiBookOpen, FiAward, FiTrendingUp } from 'react-icons/fi'
 import { projectAPI } from '@/lib/api'
 import { initSocket, disconnectSocket } from '@/lib/socket'
+import InstagramFeed from '@/components/InstagramFeed'
 
 export default function Home() {
   const [featuredProjects, setFeaturedProjects] = useState<any[]>([])
@@ -115,10 +116,10 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                href="/experiences"
+                href="/projects"
                 className="group px-8 py-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary-600 transition-all duration-200 flex items-center space-x-2 shadow-lg shadow-primary/20 hover:shadow-primary/40"
               >
-                <span>Explore Mentorship</span>
+                <span>Explore Projects</span>
                 <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
@@ -265,6 +266,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Instagram Feed */}
+      <InstagramFeed />
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary to-primary-600">
