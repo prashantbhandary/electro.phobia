@@ -106,6 +106,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <LayoutWrapper>{children}</LayoutWrapper>
+        <SpeedInsights />
       </body>
     </html>
   )
