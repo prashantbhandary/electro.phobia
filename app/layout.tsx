@@ -72,9 +72,8 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification code
-  },
+  // Domain ownership is verified via a DNS TXT record in Google Search Console,
+  // so no google-site-verification meta tag is needed here.
   other: {
     'google-adsense-account': 'ca-pub-7919679791683906',
   },
