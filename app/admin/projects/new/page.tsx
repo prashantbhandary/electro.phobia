@@ -89,9 +89,11 @@ export default function NewProject() {
             >
               <option value="IoT">IoT</option>
               <option value="Robotics">Robotics</option>
-              <option value="Automation">Automation</option>
-              <option value="PCB Design">PCB Design</option>
               <option value="Embedded">Embedded</option>
+              <option value="PCB Design">PCB Design</option>
+              <option value="Automation">Automation</option>
+              <option value="Power Electronics">Power Electronics</option>
+              <option value="Communication">Communication</option>
               <option value="Other">Other</option>
             </select>
           </div>
