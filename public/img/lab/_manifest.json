@@ -1,0 +1,117 @@
+{
+  "breadboard": {
+    "file": "/img/lab/breadboard.jpg",
+    "title": "File:400 points breadboard.jpg",
+    "license": "CC BY-SA 2.0"
+  },
+  "multimeter": {
+    "file": "/img/lab/multimeter.jpg",
+    "title": "File:2017 Cyfrowy miernik uniwersalny.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  "resistors": {
+    "file": "/img/lab/resistors.jpg",
+    "title": "File:3 Resistors.jpg",
+    "license": "CC BY-SA 2.5"
+  },
+  "capacitors": {
+    "file": "/img/lab/capacitors.jpg",
+    "title": "File:Electrolytic capacitors-P1090328.JPG",
+    "license": "CC0"
+  },
+  "arduino-uno": {
+    "file": "/img/lab/arduino-uno.jpg",
+    "title": "File:Arduino Uno - R3.jpg",
+    "license": "CC BY 2.0"
+  },
+  "esp32": {
+    "file": "/img/lab/esp32.jpg",
+    "title": "File:ESP32 Dev Board.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  "led": {
+    "file": "/img/lab/led.jpg",
+    "title": "File:RGB LED 5mm.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  "potentiometer": {
+    "file": "/img/lab/potentiometer.jpg",
+    "title": "File:Potentiometer.jpg",
+    "license": "CC BY 2.5"
+  },
+  "ldr": {
+    "file": "/img/lab/ldr.jpg",
+    "title": "File:LDR 1480405 6 7 HDR Enhancer 1.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  "dc-motor": {
+    "file": "/img/lab/dc-motor.jpg",
+    "title": "File:Dc motors.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  "hc-sr04": {
+    "file": "/img/lab/hc-sr04.jpg",
+    "title": "File:SparkFun HC-SR04 Ultrasonic-Sensor 13959-01a.jpg",
+    "license": "CC BY 2.0"
+  },
+  "transistor": {
+    "file": "/img/lab/transistor.jpg",
+    "title": "File:TRNN-T92-X-K222-01 (16237028347).jpg",
+    "license": "CC BY-SA 2.0"
+  },
+  "mpu6050": {
+    "file": "/img/lab/mpu6050.jpg",
+    "title": "File:GY-521 MPU-6050 Module 3 Axis Gyroscope + Accelerometer 0487.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  "pcb": {
+    "file": "/img/lab/pcb.jpg",
+    "title": "File:Green Printed Circuit Board and Components.JPG",
+    "license": "CC0"
+  },
+  "lipo": {
+    "file": "/img/lab/lipo.jpg",
+    "title": "File:Kindle-Reader Lithium-Polymer-Battery-01.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  "regulator-7805": {
+    "file": "/img/lab/regulator-7805.jpg",
+    "title": "File:Regulador 7805.jpg",
+    "license": "CC BY-SA 3.0"
+  },
+  "servo": {
+    "file": "/img/lab/servo.jpg",
+    "title": "File:Tower Pro SG90 micro servo motor.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  "l298n": {
+    "file": "/img/lab/l298n.jpg",
+    "title": "File:L298 IMGP4533 wp.jpg",
+    "license": "FAL"
+  },
+  "relay": {
+    "file": "/img/lab/relay.jpg",
+    "title": "File:SRD-05VDC-SL-C 5V one-channel relay module.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  "buck-converter": {
+    "file": "/img/lab/buck-converter.jpg",
+    "title": "File:LM2596 buck converter module, MP1584 buck converter module, and SDB628 boost converter module.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  "stepper": {
+    "file": "/img/lab/stepper.jpg",
+    "title": "File:28BYJ-48 unipolar stepper motor with ULN2003 driver.jpg",
+    "license": "CC BY-SA 4.0"
+  },
+  "jumper-wires": {
+    "file": "/img/lab/jumper-wires.jpg",
+    "title": "File:Jumper Wires with Crocodile Clips.jpg",
+    "license": "CC BY-SA 2.0"
+  },
+  "dht": {
+    "file": "/img/lab/dht.jpg",
+    "title": "File:Dht11 term and humidity sensor.jpg",
+    "license": "CC BY-SA 3.0"
+  }
+}

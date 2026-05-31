@@ -5,6 +5,13 @@ const config: Config = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './lib/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  // Module accent gradients are built from data strings in lib/lab/curriculum-data.ts.
+  // They're now scanned via the content path above, but safelist guards against
+  // any future dynamic gradient class so card headers never render blank again.
+  safelist: [
+    { pattern: /(from|via|to)-(teal|cyan|sky|blue|indigo|purple|emerald|amber|orange|rose|pink|yellow|violet|fuchsia|green|red)-(400|500|600)/ },
   ],
   darkMode: 'class',
   theme: {

@@ -22,10 +22,15 @@ const TOOLS = [
     subtitle: 'Find the right current-limiting resistor',
     tags: ['Any LED color', 'Supply voltage', 'Forward voltage'],
   },
+  {
+    href: '/lab/tools/voltage-divider',
+    title: 'Voltage Divider',
+    subtitle: 'R1 + R2 → Vout for sensors & scaling',
+    tags: ['Sensor interfacing', 'ADC scaling', 'Vout = Vin·R2/(R1+R2)'],
+  },
 ];
 
 const COMING_SOON = [
-  { title: 'Voltage Divider',   desc: 'R1 + R2 → Vout for sensor interfacing' },
   { title: 'Capacitor Charge',  desc: 'Animate RC charge/discharge curve' },
   { title: 'PWM Duty Cycle',    desc: 'Arduino analogWrite → actual voltage' },
   { title: '555 Timer',         desc: 'Astable / monostable frequency calculator' },

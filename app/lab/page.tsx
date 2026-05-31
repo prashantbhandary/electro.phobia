@@ -13,6 +13,12 @@ const DIFFICULTY_COLOR: Record<string, string> = {
 
 const FEATURE_CARDS = [
   {
+    title: '5-Day Bootcamp + PCB Track',
+    description: 'A full structured curriculum as slide decks — robotics to communication protocols, plus PCB design in KiCad. Read it or present it as video.',
+    color: 'bg-primary/5 border-primary/20 hover:border-primary/50',
+    href: '/lab/course',
+  },
+  {
     title: 'Live Circuit Demos',
     description: 'The site builds pre-wired circuits and walks you through them step by step — watch electrons flow in real time.',
     color: 'bg-primary/5 border-primary/20 hover:border-primary/50',
@@ -26,21 +32,9 @@ const FEATURE_CARDS = [
   },
   {
     title: 'Electronics Tools',
-    description: 'Resistor color code decoder, Ohm\'s Law solver, LED resistor calculator — practical tools for every beginner.',
+    description: 'Resistor color-code decoder, Ohm\'s Law solver, and an LED resistor calculator — practical tools for every beginner, in one place.',
     color: 'bg-amber-50 border-amber-100 hover:border-amber-300',
     href: '/lab/tools',
-  },
-  {
-    title: 'Resistor Color Codes',
-    description: 'Click any color band and instantly decode resistance. Learn the color code in 2 minutes.',
-    color: 'bg-amber-50 border-amber-100 hover:border-amber-300',
-    href: '/lab/tools/resistor',
-  },
-  {
-    title: "Ohm's Law Calculator",
-    description: "Fill in two values, get the third. V = IR made interactive.",
-    color: 'bg-yellow-50 border-yellow-100 hover:border-yellow-300',
-    href: '/lab/tools/ohms-law',
   },
   {
     title: 'Practice Building',
@@ -67,6 +61,12 @@ export default function LabHomePage() {
           </span>
         </div>
         <div className="flex items-center gap-3">
+          <Link
+            href="/lab/course"
+            className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors px-3 py-1.5 rounded-lg hover:bg-primary/5"
+          >
+            Course
+          </Link>
           <Link
             href="/lab/demos"
             className="text-sm text-gray-600 hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100"
@@ -141,6 +141,39 @@ export default function LabHomePage() {
             </div>
           </motion.div>
         </div>
+      </section>
+
+      {/* Curriculum banner */}
+      <section className="max-w-6xl mx-auto px-6 pt-14">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-blue-600 p-8 sm:p-10 text-white shadow-xl"
+        >
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="max-w-xl">
+              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold mb-3">
+                New · Structured Course
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-2 leading-tight">
+                The 5-Day Electronics &amp; Robotics Bootcamp
+              </h2>
+              <p className="text-white/90 leading-relaxed">
+                From voltage and Ohm&apos;s Law to sensors, motors, control systems, and a complete PCB-design track in KiCad —
+                every topic is a clean slide deck you can read, teach, or record into a video.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 flex-shrink-0">
+              <Link href="/lab/course" className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-gray-50 transition-all shadow-lg">
+                Explore the Course →
+              </Link>
+              <Link href="/lab/course/day-1" className="inline-flex items-center justify-center gap-2 px-7 py-3 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all">
+                Start Day 1
+              </Link>
+            </div>
+          </div>
+          <div className="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-white/10 blur-2xl" />
+        </motion.div>
       </section>
 
       {/* Featured Demos */}
@@ -270,8 +303,8 @@ export default function LabHomePage() {
       <section className="border-t border-gray-200 bg-white py-12 px-6">
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { n: '5',   label: 'Live Demos' },
-            { n: '25+', label: 'Components' },
+            { n: '6',    label: 'Course modules' },
+            { n: '175+', label: 'Slides' },
             { n: '7',   label: 'Missions' },
             { n: '0',   label: 'Hardware needed' },
           ].map(stat => (
