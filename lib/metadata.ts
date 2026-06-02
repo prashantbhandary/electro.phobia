@@ -17,50 +17,26 @@ export async function generateBlogMetadata(slug: string) {
     
     const result = await response.json()
     const blog = result.data
-    
+
     if (!blog) {
       throw new Error('Blog data not found')
     }
-    
-    // Get the image URL - handle both direct URLs and backend paths
-    let imageUrl = blog.imageUrl
-    if (imageUrl && !imageUrl.startsWith('http')) {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
-      imageUrl = `${backendUrl}${imageUrl}`
-    }
-    
-    // If it's a Facebook CDN URL, show warning that it won't work
-    // Facebook blocks their CDN from being used in OG tags
-    if (imageUrl && imageUrl.includes('fbcdn.net')) {
-      console.warn('Facebook CDN URLs cannot be used for Open Graph. Please use Imgur, Cloudinary, or upload to your backend.')
-      // Use site logo as fallback
-      imageUrl = 'https://electrophobia.tech/img/Logo.png'
-    }
-    
-    console.log('Blog metadata:', {
-      title: blog.title,
-      imageUrl: imageUrl,
-      hasImage: !!imageUrl
-    })
-    
-    // Construct absolute URLs to override parent metadata properly
-    const absoluteImageUrl = imageUrl || 'https://electrophobia.tech/img/Logo.png'
-    
+
+    // Note: the share image (og:image / twitter:image) is produced by
+    // app/blogs/[slug]/opengraph-image.tsx, which renders a branded card
+    // using the blog's own cover photo when it's fetchable by social
+    // scrapers, and a branded fallback otherwise. We intentionally do not
+    // set `images` here so that generated card is the single source of truth.
+    const description = blog.excerpt || blog.content?.replace(/<[^>]+>/g, '').substring(0, 160)
+
     return {
       title: blog.title,
-      description: blog.excerpt || blog.content?.substring(0, 160),
-      metadataBase: null, // Prevent base URL from being prepended to absolute URLs
+      description,
       openGraph: {
         title: blog.title,
-        description: blog.excerpt || blog.content?.substring(0, 160),
+        description,
         url: `https://electrophobia.tech/blogs/${slug}`,
         siteName: 'ElectroPhobia',
-        images: [{
-          url: absoluteImageUrl,
-          width: 1200,
-          height: 630,
-          alt: blog.title,
-        }],
         type: 'article',
         publishedTime: blog.createdAt,
         authors: [blog.author || 'ElectroPhobia'],
@@ -69,8 +45,7 @@ export async function generateBlogMetadata(slug: string) {
       twitter: {
         card: 'summary_large_image',
         title: blog.title,
-        description: blog.excerpt || blog.content?.substring(0, 160),
-        images: imageUrl ? [imageUrl] : undefined,
+        description,
       },
     }
   } catch (error) {

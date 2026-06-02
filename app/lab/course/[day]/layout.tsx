@@ -20,19 +20,19 @@ export async function generateMetadata({ params }: { params: { day: string } }):
     description,
     keywords: [...m.topics, 'electronics course', 'robotics tutorial', 'Arduino', 'ESP32', 'learn electronics free'],
     alternates: { canonical: url },
+    // og:image / twitter:image come from opengraph-image.tsx in this segment,
+    // which renders a per-day branded card.
     openGraph: {
       title: `${label} | ElectroLab`,
       description,
       url,
       type: 'article',
       siteName: 'ElectroPhobia',
-      images: ['/img/Logo.png'],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${label} | ElectroLab`,
       description,
-      images: ['/img/Logo.png'],
     },
   }
 }

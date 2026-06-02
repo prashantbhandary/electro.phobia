@@ -144,6 +144,45 @@ export default function CoursePage() {
         </div>
       </section>
 
+      {/* Featured cinematic deck */}
+      <section className="max-w-6xl mx-auto px-6 py-14">
+        <Link
+          href="/lab/course/charging-cc-cv"
+          className="group relative block overflow-hidden rounded-2xl border border-slate-800 bg-[#060a16] p-6 sm:p-8 shadow-xl transition-all hover:border-sky-500/40"
+        >
+          {/* ambient bloom */}
+          <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-sky-500/15 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-16 left-1/3 h-48 w-48 rounded-full bg-emerald-500/10 blur-3xl" />
+          {/* moving scope baseline */}
+          <svg className="pointer-events-none absolute inset-x-0 bottom-0 h-14 w-full opacity-30" viewBox="0 0 1200 80" preserveAspectRatio="none">
+            <path fill="none" stroke="#22d3ee" strokeWidth="2"
+              d="M0 40 Q60 8 120 40 T240 40 T360 40 T480 40 T600 40 T720 40 T840 40 T960 40 T1080 40 T1200 40">
+              <animate attributeName="d" dur="4s" repeatCount="indefinite"
+                values="M0 40 Q60 8 120 40 T240 40 T360 40 T480 40 T600 40 T720 40 T840 40 T960 40 T1080 40 T1200 40;M0 40 Q60 72 120 40 T240 40 T360 40 T480 40 T600 40 T720 40 T840 40 T960 40 T1080 40 T1200 40;M0 40 Q60 8 120 40 T240 40 T360 40 T480 40 T600 40 T720 40 T840 40 T960 40 T1080 40 T1200 40" />
+            </path>
+          </svg>
+
+          <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-sky-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-sky-300 ring-1 ring-sky-500/30">
+                <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" /> New · Cinematic
+              </span>
+              <h3 className="mt-3 text-2xl font-black text-white sm:text-3xl">
+                How Batteries Charge —{' '}
+                <span className="bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent">CC vs CV &amp; the BMS</span>
+              </h3>
+              <p className="mt-2 max-w-xl text-sm text-slate-400">
+                A 16-scene, motion-first engineering simulation. See electrons flow, watch the ADC hit threshold,
+                and the charging IC flip CC → CV in real time.
+              </p>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-sky-500 px-6 py-3 font-bold text-slate-950 transition-all group-hover:gap-3 group-hover:bg-sky-400">
+              Play simulation →
+            </span>
+          </div>
+        </Link>
+      </section>
+
       {/* For instructors */}
       <section className="max-w-4xl mx-auto px-6 py-14 text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-3">Built for teaching</h2>

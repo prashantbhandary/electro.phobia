@@ -18,13 +18,12 @@ export const metadata: Metadata = {
     url: 'https://electrophobia.tech/lab',
     siteName: 'ElectroPhobia',
     type: 'website',
-    images: ['/img/Logo.png'],
+    // og:image comes from app/lab/opengraph-image.tsx (branded ElectroLab card).
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ElectroLab — Free Electronics & Robotics Course',
     description: 'Learn electronics free: bootcamp, animated demos, missions, PCB design & calculators.',
-    images: ['/img/Logo.png'],
   },
 }
 
