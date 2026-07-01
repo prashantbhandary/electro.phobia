@@ -70,6 +70,17 @@ export const apiCall = async (endpoint: string, options: RequestInit = {}) => {
   }
 }
 
+// Auth API
+export const authAPI = {
+  // Validates the current token against the backend. Hitting /auth/me goes through
+  // the server's authMiddleware (jwt.verify), so a forged/expired token returns 401,
+  // and apiCall() will clear it and redirect to /admin/login. Throws on any failure.
+  me: async () => {
+    const response = await apiCall('/auth/me')
+    return response.admin
+  },
+}
+
 // Experience API
 export const experienceAPI = {
   getAll: async () => {
