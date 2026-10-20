@@ -87,6 +87,15 @@ const Footer = () => {
               >
                 Prashant Bhandari
               </a>
+              {' · '}
+              <a
+                href="https://bhandari-prashant.com.np/projects"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-primary transition-colors"
+              >
+                Project write-ups
+              </a>
             </p>
             <div className="flex space-x-6 text-sm">
               <Link href="/privacy" className="text-gray-400 hover:text-primary transition-colors">
