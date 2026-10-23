@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     'LED resistor calculator', 'voltage divider calculator', 'PCB design KiCad', 'embedded systems course',
     'logic gates transistor', 'line follower robot',
   ],
-  alternates: { canonical: 'https://electrophobia.tech/lab' },
+  alternates: { canonical: './' }, // each lab page is its own canonical URL
   openGraph: {
     title: 'ElectroLab — Free Interactive Electronics & Robotics Course',
     description:

@@ -8,9 +8,8 @@ const getApiUrl = () => {
 export async function generateBlogMetadata(slug: string) {
   try {
     const API_URL = getApiUrl()
-    console.log('Fetching blog metadata from:', `${API_URL}/blogs/slug/${slug}`)
     const response = await fetch(`${API_URL}/blogs/slug/${slug}`, {
-      cache: 'no-store'
+      next: { revalidate: 300 }
     })
     
     if (!response.ok) throw new Error('Blog not found')
@@ -61,7 +60,7 @@ export async function generateProjectMetadata(id: string) {
   try {
     const API_URL = getApiUrl()
     const response = await fetch(`${API_URL}/projects/${id}`, {
-      cache: 'no-store'
+      next: { revalidate: 300 }
     })
     
     if (!response.ok) throw new Error('Project not found')
@@ -77,7 +76,8 @@ export async function generateProjectMetadata(id: string) {
     }
     
     return {
-      title: `${project.title} | ElectroPhobia Projects`,
+      title: project.title,
+      alternates: { canonical: `https://electrophobia.tech/projects/${id}` },
       description: project.description?.substring(0, 160) || 'Explore this electronics project',
       openGraph: {
         title: project.title,

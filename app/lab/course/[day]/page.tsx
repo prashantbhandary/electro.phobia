@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { MODULE_MAP, MODULES } from '@/lib/lab/curriculum-data';
 import SlideDeck from '@/components/lab/SlideDeck';
+import LessonNotes from '@/components/lab/LessonNotes';
 
 export default function CourseDayPage({ params }: { params: { day: string } }) {
   const module = MODULE_MAP[params.day];
@@ -45,6 +46,8 @@ export default function CourseDayPage({ params }: { params: { day: string } }) {
 
         {/* The deck */}
         <SlideDeck module={module} />
+
+        <LessonNotes module={module} />
 
         {/* Prev / Next module nav */}
         <nav className="mt-12 grid sm:grid-cols-2 gap-4">

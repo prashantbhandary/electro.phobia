@@ -35,8 +35,10 @@ export const metadata: Metadata = {
   creator: 'Prashant Bhandari',
   publisher: 'ElectroPhobia',
   metadataBase: new URL('https://electrophobia.tech'),
+  // './' resolves to each page's own path; an absolute URL here would be
+  // inherited by every page and mark them all as duplicates of the homepage.
   alternates: {
-    canonical: 'https://electrophobia.tech',
+    canonical: './',
   },
   openGraph: {
     type: 'website',

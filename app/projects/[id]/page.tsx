@@ -1,78 +1,29 @@
-'use client'
-
-import { useState, useEffect } from 'react'
 import { FiArrowLeft, FiGithub, FiExternalLink, FiCpu, FiCalendar } from 'react-icons/fi'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { projectAPI } from '@/lib/api'
-import LoadingSpinner from '@/components/LoadingSpinner'
-import DynamicMeta from '@/components/DynamicMeta'
+import { getProjects, getProjectById } from '@/lib/server-api'
+import { generateProjectMetadata } from '@/lib/metadata'
 
-export default function ProjectDetail() {
-  const params = useParams()
-  const [project, setProject] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+// Server-rendered so the write-up is in the HTML crawlers receive.
+export const revalidate = 300
 
-  useEffect(() => {
-    const fetchProject = async () => {
-      try {
-        setLoading(true)
-        const id = params.id as string
-        const data = await projectAPI.getById(id)
-        setProject(data)
-      } catch (err: any) {
-        setError(err.message || 'Failed to load project')
-      } finally {
-        setLoading(false)
-      }
-    }
+export async function generateStaticParams() {
+  const projects = await getProjects()
+  return projects.filter((p) => p._id).map((p) => ({ id: p._id }))
+}
 
-    if (params.id) {
-      fetchProject()
-    }
-  }, [params.id])
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  return generateProjectMetadata(params.id)
+}
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 pt-20 flex items-center justify-center">
-        <LoadingSpinner message="Loading project" size="lg" />
-      </div>
-    )
-  }
-
-  if (error || !project) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 pt-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl py-12">
-          <Link 
-            href="/projects"
-            className="inline-flex items-center space-x-2 text-primary hover:text-primary-600 mb-8"
-          >
-            <FiArrowLeft />
-            <span>Back to Projects</span>
-          </Link>
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Project Not Found</h2>
-            <p className="text-gray-600 dark:text-gray-400">{error || 'The project you are looking for does not exist.'}</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
+export default async function ProjectDetail({ params }: { params: { id: string } }) {
+  const project = await getProjectById(params.id)
+  if (!project || project.isPublished === false) notFound()
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 pt-20">
-      {project && (
-        <DynamicMeta
-          title={project.title}
-          description={project.description?.substring(0, 160) || ''}
-          image={project.imageUrl}
-          type="article"
-        />
-      )}
       <article className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           {/* Back Button */}
