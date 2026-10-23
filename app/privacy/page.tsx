@@ -45,8 +45,25 @@ export default function PrivacyPolicyPage() {
                 more relevant ads.
               </p>
               <p className="mt-3">
-                You can manage cookies through your browser settings and review Google&apos;s advertising
-                policies for more detail about how ad data is handled.
+                Google&apos;s use of advertising cookies enables it and its partners to serve ads to you
+                based on your visits to this site and/or other sites on the Internet. You may opt out of
+                personalised advertising by visiting{' '}
+                <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">
+                  Google Ads Settings
+                </a>
+                , or opt out of some third-party vendors&apos; use of cookies for personalised advertising at{' '}
+                <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-primary underline">
+                  aboutads.info
+                </a>
+                .
+              </p>
+              <p className="mt-3">
+                You can also manage cookies through your browser settings. To learn how Google uses
+                information from sites that use its services, see{' '}
+                <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="text-primary underline">
+                  How Google uses information from sites or apps that use our services
+                </a>
+                .
               </p>
             </section>
 
